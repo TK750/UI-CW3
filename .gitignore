@@ -1,0 +1,4 @@
+# ignore idividial project files
+the.pro.user
+# ignore macOS directory file (in case anyone is working on mac)
+.DS_Store

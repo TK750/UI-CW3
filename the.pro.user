@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2020-11-23T12:49:22. -->
+<!-- Written by QtCreator 4.13.2, 2020-11-23T14:16:43. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -323,9 +323,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">the2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/tom/Documents/Uni_Year_2/COMP2811 User Interfaces/Coursework 3/2811_cw3/the.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/tom/Documents/Uni_Year_2/COMP2811 User Interfaces/Coursework 3/2811_cw3/the.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/tom/Documents/Uni_Year_2/COMP2811 User Interfaces/Coursework 3/2811_cw3/UI-CW3/the.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/tom/Documents/Uni_Year_2/COMP2811 User Interfaces/Coursework 3/2811_cw3/UI-CW3/the.pro</value>
     <value type="QString" key="RunConfiguration.Arguments">&quot;/home/tom/Documents/Uni_Year_2/COMP2811 User Interfaces/Coursework 3/videos&quot;</value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
