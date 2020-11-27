@@ -13,3 +13,5 @@ Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPH
 
 
 ### Changelog/Checklist
+- No of buttons created = no of compatible vids in folder
+- Removed shuffling of thumbnails 
