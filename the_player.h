@@ -22,8 +22,7 @@ class ThePlayer : public QMediaPlayer { //ThePlayer class is a subclass of QMedi
 private:
     vector<TheButtonInfo>* infos; // vector of pointers to infos?
     vector<TheButton*>* buttons; // vector of pointers to pointers to buttons??
-    QTimer* mTimer; //points to an object of QTimer
-    long updateCount = 0;
+    long updateCount = 0;// do I need this?
 
 public:
     ThePlayer() : QMediaPlayer(NULL) { //Constructor - called whenever an object of class is created
@@ -33,12 +32,6 @@ public:
         //(sender of signal, SIGNAL(stateC.. name of signal sent(paramater attached to sent signal)),
         //slot to receive signal, SLOT (parameter attached to receiveing slot
         //this pointer - this object i.e. this ThePlayer object
-
-        mTimer = new QTimer(NULL);//pointer to new Qtimer object
-        mTimer->setInterval(1000); // 1000ms in between
-        mTimer->start();// start timer
-        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
-        //connect timeout signal from mTimer to just shuffle?
     }
 
     // all buttons have been setup, store pointers here
@@ -46,8 +39,6 @@ public:
 
 private slots:
 
-    // change the image and video for one button every one second
-    void shuffle();
 
     void playStateChanged (QMediaPlayer::State ms);//changes player state??
 
