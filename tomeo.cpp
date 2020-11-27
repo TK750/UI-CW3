@@ -32,38 +32,38 @@
 using namespace std;
 
 // read in videos and thumbnails to this directory
-vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
+vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector - probably don't need to worry about this too much
 
-    vector<TheButtonInfo> out =  vector<TheButtonInfo>();
-    QDir dir(QString::fromStdString(loc) );
+    vector<TheButtonInfo> out =  vector<TheButtonInfo>();//vector of button infos called out
+    QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, conversts string to unicode as intermediary process
     QDirIterator it(dir);
 
-    while (it.hasNext()) { // for all files
+    while (it.hasNext()) { // for all files (while there is another file)
 
-        QString f = it.next();
+        QString f = it.next(); //unicode character string = next item in directory
 
-            if (f.contains("."))
+            if (f.contains(".")) // presumably ignores files with no file extension?
 
-#if defined(_WIN32)
-            if (f.contains(".wmv"))  { // windows
+#if defined(_WIN32)//something to do with determining OS and file formats - not exactly sure what
+            if (f.contains(".wmv"))  { // windows - if file extension wmv
 #else
-            if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux
+            if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux - if file extension mp4 or mov
 #endif
 
-            QString thumb = f.left( f .length() - 4) +".png";
+            QString thumb = f.left( f .length() - 4) +".png";//potential thumbnail, takes left side of file and .png file extension
             if (QFile(thumb).exists()) { // if a png thumbnail exists
-                QImageReader *imageReader = new QImageReader(thumb);
-                    QImage sprite = imageReader->read(); // read the thumbnail
-                    if (!sprite.isNull()) {
-                        QIcon* ico = new QIcon(QPixmap::fromImage(sprite)); // voodoo to create an icon for the button
-                        QUrl* url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url
-                        out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list
+                QImageReader *imageReader = new QImageReader(thumb); // reads image from file
+                    QImage sprite = imageReader->read(); // read the thumbnail - variable sprite
+                    if (!sprite.isNull()) {//if not sprite is null, why not just if isnull is false? Ahh actually makes sense for else condition
+                        QIcon *ico = new QIcon(QPixmap::fromImage(sprite)); // voodoo to create an icon for the button - new scalable icon object pixelmaps as paint device from sprite to QIcon
+                        QUrl *url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url - pretty much this
+                        out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list - passes information into vector of button infos(icon and location)
                     }
                     else
-                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
+                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;//slef explanatory not sprite was not null
             }
             else
-                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
+                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;// thumbnail doesn't exist
         }
     }
 
@@ -83,9 +83,9 @@ int main(int argc, char *argv[]) {
     vector<TheButtonInfo> videos;
 
     if (argc == 2)
-        videos = getInfoIn( string(argv[1]) );
+        videos = getInfoIn( string(argv[1]) );//calls method to read all the files in specified directory and store videos in vector videos
 
-    if (videos.size() == 0) {
+    if (videos.size() == 0) {// if no vids
 
         const int result = QMessageBox::question(
                     NULL,
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 
         switch( result )
         {
-        case QMessageBox::Yes:
+        case QMessageBox::Yes://opens link to download necessary vids
           QDesktopServices::openUrl(QUrl("https://leeds365-my.sharepoint.com/:u:/g/personal/scstke_leeds_ac_uk/EcGntcL-K3JOiaZF4T_uaA4BHn6USbq2E55kF_BTfdpPag?e=n1qfuN"));
           break;
         default:
@@ -110,19 +110,19 @@ int main(int argc, char *argv[]) {
 
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
-    player->setVideoOutput(videoWidget);
+    player->setVideoOutput(videoWidget);//videoWidget is media object that the player wil play
 
     // a row of buttons
-    QWidget *buttonWidget = new QWidget();
+    QWidget *buttonWidget = new QWidget();//new button widget of type QWidget
     // a list of the buttons
-    vector<TheButton*> buttons;
+    vector<TheButton*> buttons;//vector of button pointers?
     // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();
+    QHBoxLayout *layout = new QHBoxLayout();//sets the layout as horizontal box
     buttonWidget->setLayout(layout);
 
 
-    // create the four buttons
-    for ( int i = 0; i < 6; i++ ) {
+    // create x amount of buttons for no of vids
+    for ( unsigned i = 0; i < videos.size(); i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);
