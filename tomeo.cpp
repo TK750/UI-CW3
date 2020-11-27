@@ -10,7 +10,7 @@
  *  2811 cw3 : twak
  */
 
-//Yeh, it's hella messy =S
+//Yeh, it's hella messy with lots of dumb comments =S
 
 #include <iostream>
 #include <QApplication>
