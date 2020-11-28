@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QtCore/QDir>
 #include <QtCore/QDirIterator>
+#include <QtWidgets>
 #include "the_player.h"
 #include "the_button.h"
 
@@ -122,6 +123,13 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();//sets the layout as horizontal box
     buttonWidget->setLayout(layout);
 
+    /*QScrollArea *scrollArea = new QScrollArea();
+    scrollArea->setWidget(buttonWidget);
+    scrollArea->setMinimumWidth(300);
+    scrollArea->setBackgroundRole(QPalette::Shadow);
+
+    doing something wrong with this*/
+
 
     // create x amount of buttons for no of vids
     for ( unsigned i = 0; i < videos.size(); i++ ) {
@@ -134,6 +142,8 @@ int main(int argc, char *argv[]) {
 
     // tell the player what buttons and videos are available
     player->setContent(&buttons, & videos);
+
+
 
     // create the main window and layout
     QWidget window;
