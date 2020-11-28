@@ -32,8 +32,8 @@
 #include "the_button.h"
 
 
-// read in videos and thumbnails to this directory
-vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector - probably don't need to worry about this too much
+// read in videos and thumbnails to this directory - don't really wanna mess with this tbh
+vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
 
     vector<TheButtonInfo> out =  vector<TheButtonInfo>();//vector of button infos called out
     QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, conversts string to unicode as intermediary process
@@ -46,7 +46,7 @@ vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
             if (f.contains(".")) // presumably ignores files with no file extension?
 
 #if defined(_WIN32)//something to do with determining OS and file formats - not exactly sure what
-            if (f.contains(".wmv"))  { // windows - if file extension wmv
+            if (f.contains(".wmv"))  { // windows - if file extension wmv (mac/linux can't play wmv natively)
 #else
             if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux - if file extension mp4 or mov
 #endif
@@ -74,7 +74,7 @@ vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
 
 int main(int argc, char *argv[]) {
 
-    // let's just check that Qt is operational first
+    // check that Qt is operational first
     qDebug() << "Qt version: " << QT_VERSION_STR;
 
     // create the Qt Application
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     if (argc == 2)
         videos = getInfoIn( string(argv[1]) );//calls method to read all the files in specified directory and store videos in vector videos
 
-    if (videos.size() == 0) {// if no vids
+    if (videos.size() == 0) {// if no vids - creates message box asking if you want to download them
 
         const int result = QMessageBox::question(
                     NULL,
@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
+
     // the widget that will show the video
     QVideoWidget *videoWidget = new QVideoWidget;
 
@@ -121,12 +122,15 @@ int main(int argc, char *argv[]) {
     QHBoxLayout *layout = new QHBoxLayout();//sets the layout as horizontal box
     buttonWidget->setLayout(layout);
 
-    /*QScrollArea *scrollArea = new QScrollArea();
+
+    /*---------------Scroll Videos--------------------
+    QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setWidget(buttonWidget);
     scrollArea->setMinimumWidth(300);
     scrollArea->setBackgroundRole(QPalette::Shadow);
 
-    doing something wrong with this*/
+    doing something wrong with this
+    ------------------------------------------------*/
 
 
     // create x amount of buttons for no of vids
