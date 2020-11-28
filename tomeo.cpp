@@ -33,9 +33,9 @@
 
 
 // read in videos and thumbnails to this directory - don't really wanna mess with this tbh
-vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
+vector<TheButtonInfo> getInfoIn (string loc) {
 
-    vector<TheButtonInfo> out =  vector<TheButtonInfo>();//vector of button infos called out
+    vector<TheButtonInfo> out =  vector<TheButtonInfo>();//vector of the button infos called out
     QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, conversts string to unicode as intermediary process
     QDirIterator it(dir);
 
@@ -74,14 +74,11 @@ vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
 
 int main(int argc, char *argv[]) {
 
-    // check that Qt is operational first
-    qDebug() << "Qt version: " << QT_VERSION_STR;
+    qDebug() << "Qt version: " << QT_VERSION_STR;// check Qt is operational
 
-    // create the Qt Application
-    QApplication app(argc, argv);
+    QApplication app(argc, argv);// create Qt Application
 
-    // collect all the videos in the folder
-    vector<TheButtonInfo> videos;
+    vector<TheButtonInfo> videos;// vector of button info classes to store all vids in folder
 
     if (argc == 2)
         videos = getInfoIn( string(argv[1]) );//calls method to read all the files in specified directory and store videos in vector videos
@@ -161,6 +158,5 @@ int main(int argc, char *argv[]) {
     // showtime!
     window.show();
 
-    // wait for the app to terminate
-    return app.exec();
+    return app.exec();//starts main event loop
 }
