@@ -32,8 +32,6 @@
 #include "the_button.h"
 
 
-using namespace std;
-
 // read in videos and thumbnails to this directory
 vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector - probably don't need to worry about this too much
 
@@ -63,10 +61,10 @@ vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
                         out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list - passes information into vector of button infos(icon and location)
                     }
                     else
-                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << Qt::endl;//slef explanatory not sprite was not null
+                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb;//self explanatory - not sprite was not null
             }
             else
-                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << Qt::endl;// thumbnail doesn't exist
+                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb;// thumbnail doesn't exist
         }
     }
 
@@ -77,7 +75,7 @@ vector<TheButtonInfo> getInfoIn (string loc) {      //returns button info vector
 int main(int argc, char *argv[]) {
 
     // let's just check that Qt is operational first
-    qDebug() << "Qt version: " << QT_VERSION_STR << Qt::endl;
+    qDebug() << "Qt version: " << QT_VERSION_STR;
 
     // create the Qt Application
     QApplication app(argc, argv);
