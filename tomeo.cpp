@@ -10,7 +10,6 @@
  *  2811 cw3 : twak
  */
 
-//Yeh, it's hella messy with lots of dumb comments =S
 
 #include <iostream>
 #include <QApplication>
@@ -36,23 +35,23 @@
 // read in videos and thumbnails to this directory - don't really wanna mess with this tbh
 vector<TheButtonInfo> getInfoIn (string loc) {
 
-    vector<TheButtonInfo> out =  vector<TheButtonInfo>();//vector of the button infos called out
+    vector<TheButtonInfo> out =  vector<TheButtonInfo>();
     QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, conversts string to unicode as intermediary process
     QDirIterator it(dir);
 
-    while (it.hasNext()) { // for all files (while there is another file)
+    while (it.hasNext()) { //while there is another file
 
         QString f = it.next(); //unicode character string = next item in directory
 
-            if (f.contains(".")) // presumably ignores files with no file extension?
+            if (f.contains(".")) //presumably ignores files with no file extension?
 
-#if defined(_WIN32)//something to do with determining OS and file formats - not exactly sure what
-            if (f.contains(".wmv"))  { // windows - if file extension wmv (mac/linux can't play wmv natively)
+#if defined(_WIN32)
+            if (f.contains(".wmv"))  {
 #else
-            if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux - if file extension mp4 or mov
+            if (f.contains(".mp4") || f.contains("MOV"))  {
 #endif
 
-            QString thumb = f.left( f .length() - 4) +".png";//potential thumbnail, takes left side of file and .png file extension
+            QString thumb = f.left( f .length() - 4) +".png";
             if (QFile(thumb).exists()) { // if a png thumbnail exists
                 QImageReader *imageReader = new QImageReader(thumb); // reads image from file
                     QImage sprite = imageReader->read(); // read the thumbnail - variable sprite

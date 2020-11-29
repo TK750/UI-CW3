@@ -10,38 +10,36 @@
 #include <QUrl>
 
 
-class TheButtonInfo {//button info class
+class TheButtonInfo {
 
 public:
-    QUrl* url; // video file to play (pointer)
-    QIcon* icon; // icon to display (pointer)
+    QUrl* url;
+    QIcon* icon;
 
-    TheButtonInfo (QUrl *url, QIcon *icon) : url (url), icon (icon) {}//constructor - takes QUrl + QIcon pointers as args
+    TheButtonInfo (QUrl *url, QIcon *icon) : url (url), icon (icon) {}
 };
 
 
-class TheButton : public QPushButton {//TheButton class, subclass of QPushButton
+class TheButton : public QPushButton {
 
-    Q_OBJECT //C Macro - used to indicate that a class will define a custom slot
+    Q_OBJECT
 
 public:
-    TheButtonInfo *info;//pointer to button info object/class - what is this for?
+    TheButtonInfo *info;
 
      TheButton(QWidget *parent) :  QPushButton(parent) {
          setIconSize(QSize(290,110));
-         connect(this, SIGNAL(released()), this, SLOT (clicked() )); // if QPushButton clicked...then run clicked() below
-         //connect TheButton, send signal released () to slot in TheButton, run clicked
-
+         connect(this, SIGNAL(released()), this, SLOT (clicked() ));
     }
 
     void init(TheButtonInfo *i);
 
 
 private slots:
-    void clicked();//run clicked method/function
-
+    void clicked();
+    
 signals:
-    void jumpTo(TheButtonInfo*);//jump to sprite?
+    void jumpTo(TheButtonInfo*);
 
 };
 
