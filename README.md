@@ -18,6 +18,7 @@ Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPH
 
 
 ### To Do
+--2nd iteration--
 - Full screen player
 - Play, pause, fast forward/backward, maybe something to skip 10 secs each way like youtube app?
 - Volume control
