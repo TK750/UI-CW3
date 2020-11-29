@@ -26,5 +26,5 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
 
 void ThePlayer::jumpTo (TheButtonInfo* button) {
     setMedia( * button -> url); // gives filepath of media to play
-    play(); // plays it
+    play();
 }
