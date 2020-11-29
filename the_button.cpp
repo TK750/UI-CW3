@@ -5,9 +5,9 @@
 #include "the_button.h"
 
 
-void TheButton::init(TheButtonInfo* i) {//initialises itself
-    setIcon( *(i->icon) );//sets icon via pointer i
-    info =  i; //info - filepath?
+void TheButton::init(TheButtonInfo* i) {
+    setIcon( *(i->icon) );
+    info =  i;
 }
 
 
