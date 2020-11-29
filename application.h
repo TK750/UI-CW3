@@ -20,7 +20,6 @@
 #include "the_button.h"
 #include "the_player.h"
 
-using namespace std;
 
 class Application: public QWidget
 {
@@ -44,7 +43,6 @@ private:
 
 private slots:
     void fullScreen();
-
 
 };
 

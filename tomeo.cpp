@@ -36,7 +36,7 @@
 vector<TheButtonInfo> getInfoIn (string loc) {
 
     vector<TheButtonInfo> out =  vector<TheButtonInfo>();
-    QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, conversts string to unicode as intermediary process
+    QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, converts string to unicode as intermediary process
     QDirIterator it(dir);
 
     while (it.hasNext()) { //while there is another file
@@ -54,8 +54,8 @@ vector<TheButtonInfo> getInfoIn (string loc) {
             QString thumb = f.left( f .length() - 4) +".png";
             if (QFile(thumb).exists()) { // if a png thumbnail exists
                 QImageReader *imageReader = new QImageReader(thumb); // reads image from file
-                    QImage sprite = imageReader->read(); // read the thumbnail - variable sprite
-                    if (!sprite.isNull()) {//if not sprite is null, why not just if isnull is false? Ahh actually makes sense for else condition
+                    QImage sprite = imageReader->read(); // read the thumbnail
+                    if (!sprite.isNull()) {
                         QIcon *ico = new QIcon(QPixmap::fromImage(sprite)); // voodoo to create an icon for the button - new scalable icon object pixelmaps as paint device from sprite to QIcon
                         QUrl *url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url - pretty much this
                         out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list - passes information into vector of button infos(icon and location)
