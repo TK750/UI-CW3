@@ -30,10 +30,12 @@ public:
     ThePlayer() : QMediaPlayer(NULL) { //Constructor
         setVolume(0);
         connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
-        //connect - function inherited from QWidget to connect signals to slots
-        //(sender of signal, SIGNAL(stateC.. name of signal sent(paramater attached to sent signal)),
-        //slot to receive signal, SLOT (parameter attached to receiveing slot
-        //this pointer - this object i.e. this ThePlayer object
+
+        mTimer = new QTimer(NULL);
+        //changed the timer so that each button could have its own video
+        mTimer->setInterval(50000); // 1000ms is one second between ...
+        mTimer->start();
+        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
     }
 
     // all buttons have been setup, store pointers here
@@ -50,3 +52,4 @@ public slots:
 };
 
 #endif //CW2_THE_PLAYER_H
+

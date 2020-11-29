@@ -27,14 +27,15 @@ class TheButton : public QPushButton {//TheButton class, subclass of QPushButton
 public:
     TheButtonInfo *info;//pointer to button info object/class - what is this for?
 
-     TheButton(QWidget *parent) :  QPushButton(parent) {//constructor - something to do with inheritance/parents??
-         setIconSize(QSize(200,110));//self explanatory
+     TheButton(QWidget *parent) :  QPushButton(parent) {
+         setIconSize(QSize(290,110));
          connect(this, SIGNAL(released()), this, SLOT (clicked() )); // if QPushButton clicked...then run clicked() below
          //connect TheButton, send signal released () to slot in TheButton, run clicked
 
     }
 
     void init(TheButtonInfo *i);
+
 
 private slots:
     void clicked();//run clicked method/function
@@ -46,3 +47,4 @@ signals:
 
 
 #endif //CW2_THE_BUTTON_H
+

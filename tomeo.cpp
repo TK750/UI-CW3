@@ -27,10 +27,11 @@
 #include <QMessageBox>
 #include <QtCore/QDir>
 #include <QtCore/QDirIterator>
-#include <QtWidgets>
+#include <QLabel>
+#include <QScrollArea>
 #include "the_player.h"
 #include "the_button.h"
-
+#include "application.h"
 
 // read in videos and thumbnails to this directory - don't really wanna mess with this tbh
 vector<TheButtonInfo> getInfoIn (string loc) {
@@ -103,60 +104,12 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
-
-    // the widget that will show the video
-    QVideoWidget *videoWidget = new QVideoWidget;
-
-    // the QMediaPlayer which controls the playback
-    ThePlayer *player = new ThePlayer;
-    player->setVideoOutput(videoWidget);//videoWidget is media object that the player wil play
-
-    // a row of buttons
-    QWidget *buttonWidget = new QWidget();//new button widget of type QWidget
-    // a list of the buttons
-    vector<TheButton*> buttons;//vector of button pointers?
-    // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();//sets the layout as horizontal box
-    buttonWidget->setLayout(layout);
-
-
-    /*---------------Scroll Videos--------------------
-    QScrollArea *scrollArea = new QScrollArea();
-    scrollArea->setWidget(buttonWidget);
-    scrollArea->setMinimumWidth(300);
-    scrollArea->setBackgroundRole(QPalette::Shadow);
-
-    doing something wrong with this
-    ------------------------------------------------*/
-
-
-    // create x amount of buttons for no of vids
-    for ( unsigned i = 0; i < videos.size(); i++ ) {
-        TheButton *button = new TheButton(buttonWidget);
-        button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
-        buttons.push_back(button);
-        layout->addWidget(button);
-        button->init(&videos.at(i));
-    }
-
-    // tell the player what buttons and videos are available
-    player->setContent(&buttons, & videos);
-
-
-
-    // create the main window and layout
-    QWidget window;
-    QVBoxLayout *top = new QVBoxLayout();
-    window.setLayout(top);
-    window.setWindowTitle("tomeo");
-    window.setMinimumSize(800, 680);
-
-    // add the video and the buttons to the top level widget
-    top->addWidget(videoWidget);
-    top->addWidget(buttonWidget);
+    
+    Application window(videos);
 
     // showtime!
     window.show();
 
     return app.exec();//starts main event loop
 }
+
