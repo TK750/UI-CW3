@@ -2,6 +2,8 @@
 // Created by twak on 11/11/2019.
 //
 
+//Got rid of the timer because it was trash
+
 #ifndef CW2_THE_PLAYER_H
 #define CW2_THE_PLAYER_H
 
@@ -12,21 +14,21 @@
 #include <vector>
 #include <QTimer>
 
+
 using namespace std;
 
-class ThePlayer : public QMediaPlayer {
+class ThePlayer : public QMediaPlayer { //ThePlayer class is a subclass of QMediaPlayer (Inheritance) class definition/decleration
 
-Q_OBJECT
+    Q_OBJECT //C Macro - used to indicate that a class will define a custom slot
 
 private:
     vector<TheButtonInfo>* infos;
     vector<TheButton*>* buttons;
-    QTimer* mTimer;
-    long updateCount = 0;
+    long updateCount = 0;// do I need this?
 
 public:
-    ThePlayer() : QMediaPlayer(NULL) {
-        setVolume(0); // be slightly less annoying
+    ThePlayer() : QMediaPlayer(NULL) { //Constructor
+        setVolume(0);
         connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
         mTimer = new QTimer(NULL);
@@ -37,18 +39,15 @@ public:
     }
 
     // all buttons have been setup, store pointers here
-    void setContent(vector<TheButton*>* b, vector<TheButtonInfo>* i);
+    void setContent(vector<TheButton*>* b, vector<TheButtonInfo>* i);// links each button to the file to play?
 
 private slots:
 
-    // change the image and video for one button every one second
-    void shuffle();
-
-    void playStateChanged (QMediaPlayer::State ms);
+    void playStateChanged (QMediaPlayer::State ms);//changes player state??
 
 public slots:
 
-    // start playing this ButtonInfo
+    // start playing this ButtonInfo?
     void jumpTo (TheButtonInfo* button);
 };
 

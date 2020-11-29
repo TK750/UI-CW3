@@ -6,19 +6,13 @@
 
 using namespace std;
 
-// all buttons have been setup, store pointers here
+// all buttons have been setup, store pointers here - buttons and thumb + filepath?
 void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo>* i) {
     buttons = b;
     infos = i;
     jumpTo(buttons -> at(0) -> info);
 }
 
-// change the image and video for one button every one second
-void ThePlayer::shuffle() {
-    TheButtonInfo* i = & infos -> at (rand() % infos->size() );
-//        setMedia(*i->url);
-    buttons -> at( updateCount++ % buttons->size() ) -> init( i );
-}
 
 void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
     switch (ms) {
@@ -31,6 +25,6 @@ void ThePlayer::playStateChanged (QMediaPlayer::State ms) {
 }
 
 void ThePlayer::jumpTo (TheButtonInfo* button) {
-    setMedia( * button -> url);
-    play();
+    setMedia( * button -> url); // gives filepath of media to play
+    play(); // plays it
 }
