@@ -34,8 +34,8 @@ void Application::createWidgets(){
     QVBoxLayout *layout = new QVBoxLayout();
     buttonWidget->setLayout(layout);
 
-    //create the 6 buttons (for 6 videos)
-    for ( int i = 0; i < 6; i++ ) {
+    //create x buttons (for x no of videos)
+    for ( unsigned i = 0; i < videos.size(); i++ ) {
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         buttons.push_back(button);

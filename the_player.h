@@ -24,18 +24,12 @@ class ThePlayer : public QMediaPlayer {
 private:
     vector<TheButtonInfo>* infos;
     vector<TheButton*>* buttons;
-    long updateCount = 0;// do we need this?
 
 public:
     ThePlayer() : QMediaPlayer(NULL) {
         setVolume(0);
         connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
-        mTimer = new QTimer(NULL);
-        //changed the timer so that each button could have its own video
-        mTimer->setInterval(50000); // 1000ms is one second between ...
-        mTimer->start();
-        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
     }
 
     // all buttons have been setup, store pointers here
