@@ -12,10 +12,12 @@ Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPH
 
 
 ### Changelog/Checklist
-- No of buttons created = no of compatible vids in folder
+- No of buttons created = no of compatible vids in folder - scrollable list
 - Removed shuffling of thumbnails - everything seems to run as it should
+- Starting layout created
 
-### Still To Do - Tom 
-- Code is hella ugly and disorganised - make it more modular and improve the layout, remove messy comments (maybe remove comments at end?) 
-- Very little progress made on actual layout, sketch out first then look to implement - organising the code better will probably help with this; easier to read, more logical flow etc
-- Figure out what is going wrong with the scroll area
+
+### To Do
+- Full screen player
+- Play, pause, fast forward/backward, maybe something to skip 10 secs each way like youtube app?
+- Volume control
