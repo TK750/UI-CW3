@@ -40,6 +40,7 @@ private:
     QScrollArea* scrollArea = new QScrollArea;
     QComboBox* locList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton("Full Screen");
+    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
 
 private slots:
     void fullScreen();

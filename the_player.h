@@ -27,7 +27,7 @@ private:
 
 public:
     ThePlayer() : QMediaPlayer(NULL) {
-        setVolume(0);
+        setVolume(20);
         connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
     }

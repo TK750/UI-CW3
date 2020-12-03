@@ -30,7 +30,7 @@ void Application::createWidgets(){
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
     vector<TheButton*> buttons;
-    // the buttons are arranged horizontally
+    // the buttons are arranged vertically
     QVBoxLayout *layout = new QVBoxLayout();
     buttonWidget->setLayout(layout);
 
@@ -64,8 +64,13 @@ void Application::createWidgets(){
     fullScreenButton->setBackgroundRole(QPalette::Light);
     connect(fullScreenButton, SIGNAL(clicked()), this, SLOT(fullScreen()));
 
+    volumeSlider->setRange(0, 100);
+    volumeSlider->setValue(player->volume());
+    connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
 
 }
+
+
 
 void Application::createLayout(){
 
@@ -83,6 +88,7 @@ void Application::createLayout(){
     // top left - layout containg the video player
     QVBoxLayout* topLeft = new QVBoxLayout();
     topLeft->addWidget(videoWidget);
+    topLeft->addWidget(volumeSlider);
 
     // top line
     QHBoxLayout* videoTopLine = new QHBoxLayout();
@@ -106,11 +112,11 @@ void Application::createLayout(){
 void Application::fullScreen() {
   // make videoWidget full screen
   if (isFullScreen()) {
-    showNormal();
+    videoWidget->QVideoWidget::setFullScreen(0);
     fullScreenButton->setText("Full screen");
   }
   else {
-    showFullScreen();
+    videoWidget->QVideoWidget::setFullScreen(1);
     fullScreenButton->setText("Back");
   }
 }
