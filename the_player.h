@@ -2,6 +2,8 @@
 // Created by twak on 11/11/2019.
 //
 
+//Got rid of the timer
+
 #ifndef CW2_THE_PLAYER_H
 #define CW2_THE_PLAYER_H
 
@@ -12,28 +14,23 @@
 #include <vector>
 #include <QTimer>
 
+
+
 using namespace std;
 
 class ThePlayer : public QMediaPlayer {
 
-Q_OBJECT
+    Q_OBJECT
 
 private:
     vector<TheButtonInfo>* infos;
     vector<TheButton*>* buttons;
-    QTimer* mTimer;
-    long updateCount = 0;
 
 public:
     ThePlayer() : QMediaPlayer(NULL) {
-        setVolume(0); // be slightly less annoying
+        setVolume(0);
         connect (this, SIGNAL (stateChanged(QMediaPlayer::State)), this, SLOT (playStateChanged(QMediaPlayer::State)) );
 
-        mTimer = new QTimer(NULL);
-        //changed the timer so that each button could have its own video
-        mTimer->setInterval(50000); // 1000ms is one second between ...
-        mTimer->start();
-        connect( mTimer, SIGNAL (timeout()), SLOT ( shuffle() ) ); // ...running shuffle method
     }
 
     // all buttons have been setup, store pointers here
@@ -41,16 +38,13 @@ public:
 
 private slots:
 
-    // change the image and video for one button every one second
-    void shuffle();
-
     void playStateChanged (QMediaPlayer::State ms);
+
 
 public slots:
 
-    // start playing this ButtonInfo
     void jumpTo (TheButtonInfo* button);
+
 };
 
 #endif //CW2_THE_PLAYER_H
-
