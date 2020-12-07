@@ -25,7 +25,9 @@
 class Application: public QWidget
 {
     Q_OBJECT
+
 public:
+
     Application(vector<TheButtonInfo> videos);
 
 private:
@@ -48,6 +50,9 @@ private:
     QSlider *slider;
     QPushButton* forward = new QPushButton;
     QPushButton* backward = new QPushButton;
+    QPushButton* previous = new QPushButton;
+    QPushButton* next = new QPushButton;
+
 
 //definitions of the functions used for the player's buttons
 //they create the connection between the button and their functionality
@@ -56,6 +61,8 @@ private slots:
     void playAndPause();
     void seekForward();
     void seekBackward();
+    // void vidNext();
+    // void vidPrevious();
 
 };
 
