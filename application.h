@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QtMultimediaWidgets/QVideoWidget>
 #include <QMediaPlaylist>
+#include <QMediaPlayer>
 #include <string>
 #include <vector>
 #include <QtWidgets/QPushButton>
@@ -35,15 +36,26 @@ private:
     QVideoWidget *videoWidget = new QVideoWidget;
     QWidget *buttonWidget = new QWidget();
     vector<TheButton*> buttons;
-    ThePlayer *player = new ThePlayer;
+    ThePlayer *player = new ThePlayer();
     QLabel* label = new QLabel("<h3>Description</h3>");
     QScrollArea* scrollArea = new QScrollArea;
     QComboBox* locList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton("Full Screen");
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
+    QPushButton* playPauseButton = new QPushButton;
+    bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
+    QStringList descriptionList;
+    QSlider *slider;
+    QPushButton* forward = new QPushButton;
+    QPushButton* backward = new QPushButton;
 
+//definitions of the functions used for the player's buttons
+//they create the connection between the button and their functionality
 private slots:
     void fullScreen();
+    void playAndPause();
+    void seekForward();
+    void seekBackward();
 
 };
 

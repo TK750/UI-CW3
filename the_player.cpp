@@ -3,6 +3,7 @@
 //
 
 #include "the_player.h"
+#include "application.h"
 
 using namespace std;
 
@@ -28,4 +29,3 @@ void ThePlayer::jumpTo (TheButtonInfo* button) {
     setMedia( * button -> url); // gives filepath of media to play
     play();
 }
-

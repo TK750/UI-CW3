@@ -15,6 +15,7 @@
 #include <QTimer>
 
 
+
 using namespace std;
 
 class ThePlayer : public QMediaPlayer {
@@ -39,10 +40,11 @@ private slots:
 
     void playStateChanged (QMediaPlayer::State ms);
 
+
 public slots:
-    
+
     void jumpTo (TheButtonInfo* button);
+
 };
 
 #endif //CW2_THE_PLAYER_H
-
