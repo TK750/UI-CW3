@@ -34,7 +34,7 @@ void Application::createWidgets(){
     locList->addItem("Location1");
     locList->addItem("Location2");
 
-    //more descriotions will be added to the list after getting the locations' combo boc working
+    //more descriptions will be added to the list after getting the locations' combo boc working
     descriptionList<<"Description"<<"Description2";
 
     // a row of buttons
@@ -66,7 +66,7 @@ void Application::createWidgets(){
     }
 
     // tell the player what buttons and videos are available
-    player->setContent(&buttons, & videos);
+    player->setContent(&buttons, &videos);
 
     scrollArea->setWidget(buttonWidget);
     scrollArea->setMinimumWidth(390);
@@ -100,7 +100,15 @@ void Application::createWidgets(){
     backward->setFixedSize(70,30);
     backward->setText("-10s");
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
-    
+
+    previous->setFixedSize(70,30);
+    previous->setText("Prev");
+    connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
+
+    next->setFixedSize(70,30);
+    next->setText("Next");
+    connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
+
     //volume slider
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
@@ -126,8 +134,10 @@ void Application::createLayout(){
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(fullScreenButton);
     buttonsLayout->addWidget(playPauseButton);
+    buttonsLayout->addWidget(previous);
     buttonsLayout->addWidget(backward);
     buttonsLayout->addWidget(forward);
+    buttonsLayout->addWidget(next);
     buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
@@ -144,7 +154,7 @@ void Application::createLayout(){
 
 }
 
-//full screen mode function
+//full screen mode function - still can't get it to return from fullscreen
 void Application::fullScreen() {
   // make videoWidget full screen
   if (isFullScreen()) {
@@ -185,3 +195,16 @@ void Application::seekForward(){
 void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 10));
 }
+
+//----Prev/Next - stuck on this ----
+
+/*
+void Application::vidNext(){
+
+    player->
+}
+
+void Application::vidPrevious(){
+    player->setContent(b, i))
+}
+*/
