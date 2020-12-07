@@ -21,5 +21,5 @@ Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPH
 --2nd iteration--
 - Different responsive layout for tablet/phone
 - Full screen player
-- Play, pause, fast forward/backward, maybe something to skip 10 secs each way like youtube app?
+- Play, pause, next/prev video, maybe something to skip 10 secs each way like youtube app?
 - Volume control?
