@@ -41,7 +41,7 @@ void Application::createWidgets(){
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
     vector<TheButton*> buttons;
-    // the buttons are arranged horizontally
+    // the buttons are arranged vertically
     QVBoxLayout *layout = new QVBoxLayout();
     buttonWidget->setLayout(layout);
 
@@ -100,6 +100,11 @@ void Application::createWidgets(){
     backward->setFixedSize(70,30);
     backward->setText("-10s");
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
+    
+    //volume slider
+    volumeSlider->setRange(0, 100);
+    volumeSlider->setValue(player->volume());
+    connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
 
 }
 
@@ -123,6 +128,7 @@ void Application::createLayout(){
     buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(backward);
     buttonsLayout->addWidget(forward);
+    buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
     QVBoxLayout* descriptionLayout = new QVBoxLayout();
@@ -142,12 +148,12 @@ void Application::createLayout(){
 void Application::fullScreen() {
   // make videoWidget full screen
   if (isFullScreen()) {
-    showNormal();
+    videoWidget->QVideoWidget::setFullScreen(0);
     fullScreenButton->setText("Full screen");
   }
   //or if the widget is already in full screen mode, it makes it go back to normal
   else {
-    showFullScreen();
+    videoWidget->QVideoWidget::setFullScreen(1);
     fullScreenButton->setText("Back");
   }
 }
@@ -179,6 +185,3 @@ void Application::seekForward(){
 void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 10));
 }
-
-
-
