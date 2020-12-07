@@ -13,33 +13,36 @@
 class TheButtonInfo {
 
 public:
-    QUrl* url; // video file to play
-    QIcon* icon; // icon to display
+    QUrl* url;
+    QIcon* icon;
 
-    TheButtonInfo ( QUrl* url, QIcon* icon) : url (url), icon (icon) {}
+    TheButtonInfo (QUrl *url, QIcon *icon) : url (url), icon (icon) {}
 };
 
+
 class TheButton : public QPushButton {
+
     Q_OBJECT
 
 public:
-    TheButtonInfo* info;
+    TheButtonInfo *info;
 
      TheButton(QWidget *parent) :  QPushButton(parent) {
          setIconSize(QSize(290,110));
-         connect(this, SIGNAL(released()), this, SLOT (clicked() )); // if QPushButton clicked...then run clicked() below
+         connect(this, SIGNAL(released()), this, SLOT (clicked() ));
     }
 
-    void init(TheButtonInfo* i);
+    void init(TheButtonInfo *i);
 
 
 private slots:
     void clicked();
-
+    
 signals:
     void jumpTo(TheButtonInfo*);
 
 };
+
 
 #endif //CW2_THE_BUTTON_H
 

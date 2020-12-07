@@ -10,6 +10,7 @@
  *  2811 cw3 : twak
  */
 
+
 #include <iostream>
 #include <QApplication>
 #include <QtMultimediaWidgets/QVideoWidget>
@@ -31,41 +32,39 @@
 #include "the_button.h"
 #include "application.h"
 
-using namespace std;
-
-// read in videos and thumbnails to this directory
+// read in videos and thumbnails to this directory - don't really wanna mess with this tbh
 vector<TheButtonInfo> getInfoIn (string loc) {
 
     vector<TheButtonInfo> out =  vector<TheButtonInfo>();
-    QDir dir(QString::fromStdString(loc) );
+    QDir dir(QString::fromStdString(loc) );//Overall iterates through directory, converts string to unicode as intermediary process
     QDirIterator it(dir);
 
-    while (it.hasNext()) { // for all files
+    while (it.hasNext()) { //while there is another file
 
-        QString f = it.next();
+        QString f = it.next(); //unicode character string = next item in directory
 
-            if (f.contains("."))
+            if (f.contains(".")) //presumably ignores files with no file extension?
 
 #if defined(_WIN32)
-            if (f.contains(".wmv"))  { // windows
+            if (f.contains(".wmv"))  {
 #else
-            if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux
+            if (f.contains(".mp4") || f.contains("MOV"))  {
 #endif
 
             QString thumb = f.left( f .length() - 4) +".png";
             if (QFile(thumb).exists()) { // if a png thumbnail exists
-                QImageReader *imageReader = new QImageReader(thumb);
+                QImageReader *imageReader = new QImageReader(thumb); // reads image from file
                     QImage sprite = imageReader->read(); // read the thumbnail
                     if (!sprite.isNull()) {
-                        QIcon* ico = new QIcon(QPixmap::fromImage(sprite)); // voodoo to create an icon for the button
-                        QUrl* url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url
-                        out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list
+                        QIcon *ico = new QIcon(QPixmap::fromImage(sprite)); // voodoo to create an icon for the button - new scalable icon object pixelmaps as paint device from sprite to QIcon
+                        QUrl *url = new QUrl(QUrl::fromLocalFile( f )); // convert the file location to a generic url - pretty much this
+                        out . push_back(TheButtonInfo( url , ico  ) ); // add to the output list - passes information into vector of button infos(icon and location)
                     }
                     else
-                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
+                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb;//self explanatory - not sprite was not null
             }
             else
-                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
+                qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb;// thumbnail doesn't exist
         }
     }
 
@@ -75,19 +74,16 @@ vector<TheButtonInfo> getInfoIn (string loc) {
 
 int main(int argc, char *argv[]) {
 
-    // let's just check that Qt is operational first
-    qDebug() << "Qt version: " << QT_VERSION_STR << endl;
+    qDebug() << "Qt version: " << QT_VERSION_STR;// check Qt is operational
 
-    // create the Qt Application
-    QApplication app(argc, argv);
+    QApplication app(argc, argv);// create Qt Application
 
-    // collect all the videos in the folder
-    vector<TheButtonInfo> videos;
+    vector<TheButtonInfo> videos;// vector of button info classes to store all vids in folder
 
     if (argc == 2)
-        videos = getInfoIn( string(argv[1]) );
+        videos = getInfoIn( string(argv[1]) );//calls method to read all the files in specified directory and store videos in vector videos
 
-    if (videos.size() == 0) {
+    if (videos.size() == 0) {// if no vids - creates message box asking if you want to download them
 
         const int result = QMessageBox::question(
                     NULL,
@@ -98,7 +94,7 @@ int main(int argc, char *argv[]) {
 
         switch( result )
         {
-        case QMessageBox::Yes:
+        case QMessageBox::Yes://opens link to download necessary vids
           QDesktopServices::openUrl(QUrl("https://leeds365-my.sharepoint.com/:u:/g/personal/scstke_leeds_ac_uk/EcGntcL-K3JOiaZF4T_uaA4BHn6USbq2E55kF_BTfdpPag?e=n1qfuN"));
           break;
         default:
@@ -107,13 +103,12 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
 
+    
     Application window(videos);
-
 
     // showtime!
     window.show();
 
-    // wait for the app to terminate
-    return app.exec();
+    return app.exec();//starts main event loop
 }
 
