@@ -21,6 +21,7 @@
 #include "the_button.h"
 #include "the_player.h"
 
+using namespace std;
 
 class Application: public QWidget
 {
@@ -31,6 +32,8 @@ public:
 private:
     void createWidgets();
     void createLayout();
+    void createVideoButtons();
+    void createButtonsLayout();
 
 
     vector<TheButtonInfo> videos;
@@ -41,14 +44,19 @@ private:
     QLabel* label = new QLabel("<h3>Description</h3>");
     QScrollArea* scrollArea = new QScrollArea;
     QComboBox* locList = new QComboBox();
+    QComboBox* locationsList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton("Full Screen");
     QPushButton* playPauseButton = new QPushButton;
     bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
-    QStringList descriptionList;
+    bool isVideoFullScreen = false;
+    QStringList descriptions;
+    QStringList locations;
     QSlider *slider;
     QPushButton* forward = new QPushButton;
     QPushButton* backward = new QPushButton;
 
+    //thumbnails layout
+    QGridLayout* layout = new QGridLayout();
 
 
 //definitions of the functions used for the player's buttons
@@ -58,6 +66,8 @@ private slots:
     void playAndPause();
     void seekForward();
     void seekBackward();
+    void switchLocation(int index);
+
 
 };
 
