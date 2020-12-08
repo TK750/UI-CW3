@@ -120,15 +120,18 @@ void Application::createWidgets(){
     backward->setText("-10s");
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
     
-    previous->setFixedSize(70,30);
+    //previous video - still working out
+    previous->setMaximumWidth(0);
     previous->setText("Prev");
     connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
 
-    next->setFixedSize(70,30);
+    //next video - still working out
+    next->setMaximumWidth(0);
     next->setText("Next");
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //volume slider
+    volumeSlider->setMaximumWidth(0);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
@@ -182,6 +185,10 @@ void Application::fullScreen() {
     slider->hide();
     fullScreenButton->hide();
     label->hide();
+    volumeSlider->hide();
+    previous->hide();
+    next->hide();
+    player->pause();
   }
   //or if the widget is already in full screen mode, it makes it go back to normal
   else {
@@ -204,6 +211,12 @@ void Application::fullScreen() {
     fullScreenButton->show();
     label->setMaximumWidth(200);
     label->show();
+    volumeSlider->setMinimumWidth(300);
+    volumeSlider->show();
+    previous->setMaximumWidth(70);
+    previous->show();
+    next->setMaximumWidth(70);
+    next->show();
 
   }
 }

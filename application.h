@@ -72,7 +72,7 @@ private slots:
     void seekForward();
     void seekBackward();
     void switchLocation(int index);
-    // void vidNext();
+    // void vidNext(); - need to figure this out
     // void vidPrevious();
 
 
