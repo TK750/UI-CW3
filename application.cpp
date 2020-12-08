@@ -99,7 +99,7 @@ void Application::createWidgets(){
     //buttons will have 0 as default size such that they are only present when the video is played
     // play/pause button
     playPauseButton->setMaximumWidth(0);
-    playPauseButton->setText("Pause");
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
 
     //video timeline
@@ -112,23 +112,26 @@ void Application::createWidgets(){
 
     //forward 10 seconds button
     forward->setMaximumWidth(0);
-    forward->setText("+10s");
+    forward->setIcon(QIcon(":/fast-forward.svg"));
     connect(forward, SIGNAL(clicked()), this, SLOT(seekForward()));
 
     //go backwards 10 seconds button
     backward->setMaximumWidth(0);
-    backward->setText("-10s");
+    backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
     
-    previous->setFixedSize(70,30);
-    previous->setText("Prev");
+    //previous video - still working out
+    previous->setMaximumWidth(0);
+    previous->setIcon(QIcon(":/back.svg"));
     connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
 
-    next->setFixedSize(70,30);
-    next->setText("Next");
+    //next video - still working out
+    next->setMaximumWidth(0);
+    next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //volume slider
+    volumeSlider->setMaximumWidth(0);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
@@ -143,9 +146,9 @@ void Application::createLayout(){
     //layout for the player's buttons
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(fullScreenButton);
-    buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(previous);
     buttonsLayout->addWidget(backward);
+    buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(forward);
     buttonsLayout->addWidget(next);
     buttonsLayout->addWidget(volumeSlider);
@@ -182,6 +185,10 @@ void Application::fullScreen() {
     slider->hide();
     fullScreenButton->hide();
     label->hide();
+    volumeSlider->hide();
+    previous->hide();
+    next->hide();
+    player->pause();
   }
   //or if the widget is already in full screen mode, it makes it go back to normal
   else {
@@ -190,13 +197,13 @@ void Application::fullScreen() {
     videoWidget->setMaximumWidth(2000);
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
-    fullScreenButton->setText("Back");
+    fullScreenButton->setIcon(QIcon(":/list.svg"));
     locationsList->hide();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
     forward->setMaximumWidth(70);
     forward->show();
-    backward->setMinimumWidth(70);
+    backward->setMaximumWidth(70);
     backward->show();
     slider->setMinimumWidth(800);
     slider->show();
@@ -204,6 +211,12 @@ void Application::fullScreen() {
     fullScreenButton->show();
     label->setMaximumWidth(200);
     label->show();
+    volumeSlider->setMinimumWidth(300);
+    volumeSlider->show();
+    previous->setMaximumWidth(70);
+    previous->show();
+    next->setMaximumWidth(70);
+    next->show();
 
   }
 }
@@ -216,12 +229,12 @@ void Application::fullScreen() {
 void Application::playAndPause() {
   if (isVideoPlaying == false) {
     player->pause();
-    playPauseButton->setText("Play");
+    playPauseButton->setIcon(QIcon(":/play-button.svg"));
     isVideoPlaying = true;
   }
   else {
     player->play();
-    playPauseButton->setText("Pause");
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
     isVideoPlaying = false;
   }
 }
@@ -236,6 +249,7 @@ void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 10));
 }
 
+
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
 
@@ -249,6 +263,7 @@ void Application::vidPrevious(){
     player->setContent(b, i))
 }
 */
+
 
 //this function makes the connection between the elements of the combo box and the videos
 //the videos are not properly distributed, hence the funciton does not work the proper way yet

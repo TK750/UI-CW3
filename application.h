@@ -46,7 +46,7 @@ private:
     QScrollArea* scrollArea = new QScrollArea;
     QComboBox* locList = new QComboBox();
     QComboBox* locationsList = new QComboBox();
-    QPushButton* fullScreenButton = new QPushButton("Full Screen");
+    QPushButton* fullScreenButton = new QPushButton();
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
     QPushButton* playPauseButton = new QPushButton;
     bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
@@ -72,7 +72,7 @@ private slots:
     void seekForward();
     void seekBackward();
     void switchLocation(int index);
-    // void vidNext();
+    // void vidNext(); - need to figure this out
     // void vidPrevious();
 
 
