@@ -146,9 +146,9 @@ void Application::createLayout(){
     //layout for the player's buttons
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(fullScreenButton);
-    buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(previous);
     buttonsLayout->addWidget(backward);
+    buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(forward);
     buttonsLayout->addWidget(next);
     buttonsLayout->addWidget(volumeSlider);
