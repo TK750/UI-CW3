@@ -197,6 +197,7 @@ void Application::seekBackward(){
 }
 
 //----Prev/Next - stuck on this ----
+// Tried QMediaPlaylist
 
 /*
 void Application::vidNext(){

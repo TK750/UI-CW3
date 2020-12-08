@@ -52,6 +52,7 @@ private:
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
+    QMediaPlaylist *playlist = new QMediaPlaylist;
 
 
 //definitions of the functions used for the player's buttons
