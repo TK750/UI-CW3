@@ -30,20 +30,21 @@ Writeup - Google doc link: https://docs.google.com/document/d/18In4LlW1e3DV6Dwkd
 - First simple layout done
 
 #### Plan for second iteration: 
-- Grid view -> Fullscreen Video
+- Grid view -> fullscreen video -> grid layout
 - Play, pause, change speed, transport bar, volume - vids do have sound, just default set to 0
 - Maybe some sketches, design for desktop and mobile
 
 #### Done in second iteration:
 - No of buttons created = no of compatible vids in folder - scrollable list
-- Grid view -> Fullscreen Video
 - Play, pause, change speed, transport bar, volume - vids do have sound, just default set to 0
 - Next/prev video buttons - non functional
+- Didn’t get round to grid layout, currently default layout -> fullscreen video -> can’t get back
 
 #### Plan for third iteration: 
 - Use icons for the player buttons
 - Add volume icon
 - Fix next/prev video
+- Create grid view
 - Polish general appearance - grid view, could do with making look pretty
 - Fix bits and pieces that don't work/work a bit funny
 - Different responsive layout for tablet/phone??
