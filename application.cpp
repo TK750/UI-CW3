@@ -249,6 +249,7 @@ void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 10));
 }
 
+
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
 
@@ -262,6 +263,7 @@ void Application::vidPrevious(){
     player->setContent(b, i))
 }
 */
+
 
 //this function makes the connection between the elements of the combo box and the videos
 //the videos are not properly distributed, hence the funciton does not work the proper way yet
