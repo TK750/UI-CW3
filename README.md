@@ -11,6 +11,7 @@ Olivia Broekhuis (sc19ob)
 
 
 Notes - Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPHQPyGwWVjnjgDdO1s/edit?usp=sharing
+
 Writeup - Google doc link: https://docs.google.com/document/d/18In4LlW1e3DV6DwkdDvTjPfQnxSWVOArQIfwUh3JjKk/edit
 
 ### Current Repo Status:
