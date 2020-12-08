@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pause.svg</file>
+        <file>bar-graph.svg</file>
+        <file>rewind.svg</file>
+        <file>fast-forward.svg</file>
+        <file>back.svg</file>
+        <file>next.svg</file>
+        <file>list.svg</file>
+        <file>play-button.svg</file>
+    </qresource>
+</RCC>

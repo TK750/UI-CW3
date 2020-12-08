@@ -99,7 +99,7 @@ void Application::createWidgets(){
     //buttons will have 0 as default size such that they are only present when the video is played
     // play/pause button
     playPauseButton->setMaximumWidth(0);
-    playPauseButton->setText("Pause");
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
 
     //video timeline
@@ -112,22 +112,22 @@ void Application::createWidgets(){
 
     //forward 10 seconds button
     forward->setMaximumWidth(0);
-    forward->setText("+10s");
+    forward->setIcon(QIcon(":/fast-forward.svg"));
     connect(forward, SIGNAL(clicked()), this, SLOT(seekForward()));
 
     //go backwards 10 seconds button
     backward->setMaximumWidth(0);
-    backward->setText("-10s");
+    backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
     
     //previous video - still working out
     previous->setMaximumWidth(0);
-    previous->setText("Prev");
+    previous->setIcon(QIcon(":/back.svg"));
     connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
 
     //next video - still working out
     next->setMaximumWidth(0);
-    next->setText("Next");
+    next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //volume slider
@@ -197,13 +197,13 @@ void Application::fullScreen() {
     videoWidget->setMaximumWidth(2000);
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
-    fullScreenButton->setText("Back");
+    fullScreenButton->setIcon(QIcon(":/list.svg"));
     locationsList->hide();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
     forward->setMaximumWidth(70);
     forward->show();
-    backward->setMinimumWidth(70);
+    backward->setMaximumWidth(70);
     backward->show();
     slider->setMinimumWidth(800);
     slider->show();
@@ -229,12 +229,12 @@ void Application::fullScreen() {
 void Application::playAndPause() {
   if (isVideoPlaying == false) {
     player->pause();
-    playPauseButton->setText("Play");
+    playPauseButton->setIcon(QIcon(":/play-button.svg"));
     isVideoPlaying = true;
   }
   else {
     player->play();
-    playPauseButton->setText("Pause");
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
     isVideoPlaying = false;
   }
 }
