@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);// create Qt Application
 
-    vector<TheButtonInfo> videos;// vector of button info classes to store all vids in folder
+    vector<TheButtonInfo> videos;// vector of button info objects? to store all vids in folder
 
     if (argc == 2)
         videos = getInfoIn( string(argv[1]) );//calls method to read all the files in specified directory and store videos in vector videos

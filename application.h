@@ -26,7 +26,9 @@ using namespace std;
 class Application: public QWidget
 {
     Q_OBJECT
+
 public:
+
     Application(vector<TheButtonInfo> videos);
 
 private:
@@ -34,7 +36,6 @@ private:
     void createLayout();
     void createVideoButtons();
     void createButtonsLayout();
-
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
@@ -46,6 +47,7 @@ private:
     QComboBox* locList = new QComboBox();
     QComboBox* locationsList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton("Full Screen");
+    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
     QPushButton* playPauseButton = new QPushButton;
     bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
     bool isVideoFullScreen = false;
@@ -54,6 +56,9 @@ private:
     QSlider *slider;
     QPushButton* forward = new QPushButton;
     QPushButton* backward = new QPushButton;
+    QPushButton* previous = new QPushButton;
+    QPushButton* next = new QPushButton;
+    // can't figure out - QMediaPlaylist *playlist = new QMediaPlaylist;
 
     //thumbnails layout
     QGridLayout* layout = new QGridLayout();
@@ -67,6 +72,8 @@ private slots:
     void seekForward();
     void seekBackward();
     void switchLocation(int index);
+    // void vidNext();
+    // void vidPrevious();
 
 
 };
