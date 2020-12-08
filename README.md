@@ -1,3 +1,4 @@
+last updated: 8/12/20 - 21:43 - TK
 # UI-CW3
 
 ## COMP 2811 - tomeo video player - coursework 3
@@ -14,8 +15,8 @@ Writeup - Google doc link: https://docs.google.com/document/d/18In4LlW1e3DV6Dwkd
 
 ### Current Repo Status:
 - Master Branch: Completed 2nd iteration
-- Tom Branch: Working on 3rd
-- Eliza Branch: Working on 3rd
+- Tom Branch: Working branch for 3rd
+- Eliza Branch: Working branch for 3rd
 
 #### Plan for first iteration:
 - Fix anything that is broken/janky, ensure runs as expected
