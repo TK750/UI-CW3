@@ -30,7 +30,6 @@ class Application: public QWidget
 public:
 
     Application(vector<TheButtonInfo> videos);
-    QPushButton* playPauseButton = new QPushButton;
 
 private:
     void createWidgets();
@@ -49,6 +48,7 @@ private:
     QComboBox* locList = new QComboBox();
     QComboBox* locationsList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton();
+    QPushButton* playPauseButton = new QPushButton;
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
     bool isVideoPlaying; //used for the play/pause button to check the status of the video
     bool isVideoFullScreen = false;
