@@ -30,12 +30,14 @@ class Application: public QWidget
 public:
 
     Application(vector<TheButtonInfo> videos);
+    QPushButton* playPauseButton = new QPushButton;
 
 private:
     void createWidgets();
     void createLayout();
     void createVideoButtons();
     void createButtonsLayout();
+    void autoPlay();
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
@@ -48,8 +50,7 @@ private:
     QComboBox* locationsList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton();
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
-    QPushButton* playPauseButton = new QPushButton;
-    bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
+    bool isVideoPlaying; //used for the play/pause button to check the status of the video
     bool isVideoFullScreen = false;
     QStringList descriptions;
     QStringList locations;
@@ -72,8 +73,8 @@ private slots:
     void seekForward();
     void seekBackward();
     void switchLocation(int index);
-    // void vidNext(); - need to figure this out
-    // void vidPrevious();
+    void vidNext();
+    void vidPrevious();
 
 
 };

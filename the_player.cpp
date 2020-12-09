@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// all buttons have been setup, store pointers here - buttons and thumb + filepath?
+// all buttons have been setup, store pointers here
 void ThePlayer::setContent(std::vector<TheButton*>* b, std::vector<TheButtonInfo>* i) {
     buttons = b;
     infos = i;

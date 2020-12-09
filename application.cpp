@@ -22,7 +22,6 @@ Application::Application(vector<TheButtonInfo> videos) : videos(videos){
     //windows' properties
     setWindowTitle("tomeo");
     setMinimumSize(800, 680);
-    setMinimumWidth(1000);
 
     //functions used to create the application tomeo
     createWidgets();
@@ -97,9 +96,9 @@ void Application::createWidgets(){
     connect(fullScreenButton, SIGNAL(clicked()), this, SLOT(fullScreen()));
 
     //buttons will have 0 as default size such that they are only present when the video is played
-    // play/pause button
+    //play/pause button
     playPauseButton->setMaximumWidth(0);
-    playPauseButton->setIcon(QIcon(":/pause.svg"));
+    playAndPause();
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
 
     //video timeline
@@ -179,6 +178,7 @@ void Application::fullScreen() {
     locationsList->show();
     isVideoFullScreen=false;
     //player's buttons will dissapear while we are in the video grid
+    playAndPause();
     playPauseButton->hide();
     forward->hide();
     backward->hide();
@@ -190,8 +190,8 @@ void Application::fullScreen() {
     next->hide();
     player->pause();
   }
-  //or if the widget is already in full screen mode, it makes it go back to normal
   else {
+    //Enables fullscreen mode with media buttons
     videoWidget->show();
     buttonWidget->hide();
     videoWidget->setMaximumWidth(2000);
@@ -199,6 +199,7 @@ void Application::fullScreen() {
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
     locationsList->hide();
+    autoPlay();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
     forward->setMaximumWidth(70);
@@ -225,7 +226,14 @@ void Application::fullScreen() {
 //we change the vlaue of the boolean variable isVideoPlaying
 //in order to keep track of the video's status (played/paused)
 //issue: if clicking on another video, the button has to be pressed a few times
-//before it starts working properly
+//before it starts working properly - fixed yayyy - had to call playAndPause in fullScreen function
+//also made autoplay to change icon without affecting playback status when button clicked
+
+void Application::autoPlay() {
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
+    isVideoPlaying = false;
+}
+
 void Application::playAndPause() {
   if (isVideoPlaying == false) {
     player->pause();
@@ -253,22 +261,22 @@ void Application::seekBackward(){
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
 
-/*
+
 void Application::vidNext(){
 
-    player->
+    //player->
 }
 
 void Application::vidPrevious(){
-    player->setContent(b, i))
+    player->jumpTo(buttons)
 }
-*/
+
 
 
 //this function makes the connection between the elements of the combo box and the videos
 //the videos are not properly distributed, hence the funciton does not work the proper way yet
 //at least it shows that we can group the videos and that the combo box works, when an element is clicked
-void Application::switchLocation(int index)
+void Application::switchLocation(int index)//seems like something a little funky going on here
 {
     label->setText(locList->itemText(index));
     for ( unsigned i = 0; i < 2; i++ ) {
