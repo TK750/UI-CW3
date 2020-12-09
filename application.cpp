@@ -205,7 +205,7 @@ void Application::fullScreen() {
     forward->show();
     backward->setMaximumWidth(70);
     backward->show();
-    slider->setMinimumWidth(800);
+    slider->setMaximumWidth(2000);
     slider->show();
     fullScreenButton->setMaximumWidth(120);
     fullScreenButton->show();
@@ -241,12 +241,12 @@ void Application::playAndPause() {
 
 //forward 10 seconds button connection
 void Application::seekForward(){
-    player->setPosition(round((double)slider->value() * 10 ));
+    player->setPosition(round((double)slider->value() * 5 ));
 }
 
 //backward 10 seconds button connection
 void Application::seekBackward(){
-    player->setPosition(round((double)slider->value() / 10));
+    player->setPosition(round((double)slider->value() / 5));
 }
 
 
