@@ -152,7 +152,7 @@ void Application::createWidgets(){
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
-    volumeLabel->setMaximumWidth(0);
+    volumeLabel->hide();
     volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
     volumeLabel->setScaledContents(true);
 
@@ -333,5 +333,6 @@ void Application::switchLocation(int index)//seems like something a little funky
         button->init(&videos.at(0));
     }
 }
+
 
 
