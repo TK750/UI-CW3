@@ -58,6 +58,10 @@ private:
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
+    QComboBox* filterBox = new QComboBox();
+    QStringList elementsFilterBy;
+    QLineEdit* searchField = new QLineEdit();
+    QPushButton* search = new QPushButton;
 
     //thumbnails layout
     QGridLayout* layout = new QGridLayout(this);
