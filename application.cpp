@@ -135,7 +135,6 @@ void Application::createWidgets(){
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //search button
-    search->show();
     search->setIcon(QIcon(":/magnifying-glass.svg"));
     search->setFixedHeight(40);
     //set search field height
@@ -276,12 +275,12 @@ void Application::playAndPause() {
   }
 }
 
-//forward 10 seconds button connection
+//forward 5 seconds button connection
 void Application::seekForward(){
     player->setPosition(round((double)slider->value() * 5 ));
 }
 
-//backward 10 seconds button connection
+//backward 5 seconds button connection
 void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 5));
 }
