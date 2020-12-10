@@ -54,10 +54,10 @@ void Application::createWidgets(){
     //create x buttons (for x no of videos)
     for ( unsigned i = 0; i < videos.size(); i++ ) {
         //this conditions will create the rows and columns of the grid layout
-        if(i%2==0){
+        if(i % 2 == 0){
             n++;
         }
-        if(i%2!=0){
+        if(i % 2 != 0){
             j = 0;
         }
         else{
@@ -138,7 +138,6 @@ void Application::createWidgets(){
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //search button
-    search->show();
     search->setIcon(QIcon(":/magnifying-glass.svg"));
     search->setFixedHeight(40);
     connect(search, SIGNAL(clicked()), this, SLOT(searchVideo()));
@@ -291,12 +290,12 @@ void Application::playAndPause() {
   }
 }
 
-//forward 10 seconds button connection
+//forward 5 seconds button connection
 void Application::seekForward(){
     player->setPosition(round((double)slider->value() * 5 ));
 }
 
-//backward 10 seconds button connection
+//backward 5 seconds button connection
 void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 5));
 }
