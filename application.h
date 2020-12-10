@@ -34,8 +34,7 @@ public:
 private:
     void createWidgets();
     void createLayout();
-    void createVideoButtons();
-    void createButtonsLayout();
+
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
@@ -61,7 +60,8 @@ private:
     // can't figure out - QMediaPlaylist *playlist = new QMediaPlaylist;
 
     //thumbnails layout
-    QGridLayout* layout = new QGridLayout();
+    QGridLayout* layout = new QGridLayout(this);
+    QVBoxLayout *top = new QVBoxLayout();
 
 
 //definitions of the functions used for the player's buttons
