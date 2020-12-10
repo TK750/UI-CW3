@@ -30,20 +30,24 @@ Application::Application(vector<TheButtonInfo> videos) : videos(videos){
 }
 
 void Application::createWidgets(){
+    //filter box elements
+    elementsFilterBy<<"Filter by"<<"Country"<<"City"<<"Date";
+    filterBox->setCurrentIndex(1);
+    filterBox->addItems(elementsFilterBy);
 
     player->setVideoOutput(videoWidget);
     videoWidget->hide();
 
-    //list of possible locations of where the videos where taken
-    //this helps organinzing the videos making them more accessbile
-    locations<<"Location1"<<"Location2";
+//    //list of possible locations of where the videos where taken
+//    //this helps organinzing the videos making them more accessbile
+//    locations<<"Location1"<<"Location2";
 
-    //more descriptions will be added to the list after getting the locations' combo box working
-    descriptions<<"Description"<<"Description2";
+//    //more descriptions will be added to the list after getting the locations' combo box working
+//    descriptions<<"Description"<<"Description2";
 
-    locationsList->addItems(locations);
-    locList->addItems(descriptions);
-    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
+//    locationsList->addItems(locations);
+//    locList->addItems(descriptions);
+//    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
 
     // a list of the buttons
     vector<TheButton*> buttons;
@@ -119,7 +123,7 @@ void Application::createWidgets(){
     backward->hide();
     backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
-    
+
     //previous video - still working out
     previous->hide();
     previous->setIcon(QIcon(":/back.svg"));
@@ -130,6 +134,15 @@ void Application::createWidgets(){
     next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
+    //search button
+    search->show();
+    search->setIcon(QIcon(":/magnifying-glass.svg"));
+    search->setFixedHeight(40);
+    //set search field height
+    searchField->setFixedHeight(40);
+    //set filter box height
+    filterBox->setFixedHeight(40);
+
     //volume slider
     volumeSlider->hide();
     volumeSlider->setRange(0, 100);
@@ -138,7 +151,6 @@ void Application::createWidgets(){
     volumeLabel->setMaximumWidth(0);
     volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
     volumeLabel->setScaledContents(true);
-
 }
 
 
@@ -155,8 +167,14 @@ void Application::createLayout(){
     buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
+    //layout for the search bar, search button and filter combo box
+    QHBoxLayout* searchLayout = new QHBoxLayout();
+    searchLayout->addWidget(filterBox);
+    searchLayout->addWidget(searchField);
+    searchLayout->addWidget(search);
+
     QVBoxLayout* descriptionLayout = new QVBoxLayout();
-    descriptionLayout->addWidget(locationsList);
+    descriptionLayout->addLayout(searchLayout);
     descriptionLayout->addWidget(buttonWidget);
 
     top->addWidget(videoWidget);
@@ -178,8 +196,10 @@ void Application::fullScreen() {
     //when the back button is pressed, the video widget is given the size of 0 such that it disappears off the screen
     videoWidget->hide();
     buttonWidget->show();
-    locationsList->show();
     isVideoFullScreen=false;
+    filterBox->show();
+    searchField->show();
+    search->show();
     //player's buttons will dissapear while we are in the video grid
     playAndPause();
     playPauseButton->hide();
@@ -202,7 +222,6 @@ void Application::fullScreen() {
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
-    locationsList->hide();
     autoPlay();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
@@ -225,6 +244,9 @@ void Application::fullScreen() {
     previous->show();
     next->setMaximumWidth(70);
     next->show();
+    filterBox->hide();
+    searchField->hide();
+    search->hide();
 
   }
 }
@@ -278,8 +300,6 @@ void Application::vidPrevious(){
 
 }
 
-
-
 //this function makes the connection between the elements of the combo box and the videos
 //the videos are not properly distributed, hence the function does not work the proper way yet
 //at least it shows that we can group the videos and that the combo box works, when an element is clicked
@@ -297,5 +317,3 @@ void Application::switchLocation(int index)//seems like something a little funky
         button->init(&videos.at(0));
     }
 }
-
-
