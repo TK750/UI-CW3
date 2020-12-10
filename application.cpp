@@ -1,22 +1,5 @@
 #include "application.h"
 
-//first iteration:
-//column of buttons has been moved to the right of the video player
-//location/description of the video has been added at the bottom of the player - not functional yet
-//combo box to choose the location for videos - not functional
-
-//second iteration
-//play/pause button and video's timeline has been added
-//the description of the videos has been changed to an individual description for each video
-//forward/backward 10 seconds button has been added
-//the main layout has been changed to a grid layout
-//the locations combo box has been fixed and it is now working, even though the videos are added at random - see switchLocation at the bottom of this file
-//IMPROVEMENTS: -change the text of the buttons to icons
-//              -add some styling
-//              -create more functions to adhere to the 50 lines rule
-//ISSUES: -videos are allocated at random when a combo box element is clicked
-//        -when you click once on a video it opens the new layout and it is responsive, but if you go back and click on another video, it messes up the layout
-
 
 Application::Application(vector<TheButtonInfo> videos) : videos(videos){
     //windows' properties
@@ -25,11 +8,67 @@ Application::Application(vector<TheButtonInfo> videos) : videos(videos){
 
     //functions used to create the application tomeo
     createWidgets();
+    createThumbnails();
     createLayout();
-
+    createConnections();
 }
 
 void Application::createWidgets(){
+    //video description
+    label->setAlignment(Qt::AlignLeft);
+    label->hide();
+
+    //full screen button
+    fullScreenButton->hide();
+    fullScreenButton->setBackgroundRole(QPalette::Light);
+
+    // play/pause button
+    playPauseButton->hide();
+    playAndPause();
+
+    //video timeline
+    slider = new QSlider(Qt::Horizontal, this);
+    slider->hide();
+
+    //forward 10 seconds button
+    forward->hide();
+    forward->setIcon(QIcon(":/fast-forward.svg"));
+
+    //go backwards 10 seconds button
+    backward->hide();
+    backward->setIcon(QIcon(":/rewind.svg"));
+
+    //previous video button
+    previous->hide();
+    previous->setIcon(QIcon(":/back.svg"));
+
+    //next video button
+    next->hide();
+    next->setIcon(QIcon(":/next.svg"));
+
+    //search button
+    search->setIcon(QIcon(":/magnifying-glass.svg"));
+    search->setFixedHeight(40);
+    searchField->setFixedHeight(40);
+    filterBox->setFixedHeight(40);
+
+    //volume slider
+    volumeSlider->hide();
+    volumeSlider->setRange(0, 100);
+    volumeSlider->setValue(player->volume());
+    volumeLabel->hide();
+    volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
+    volumeLabel->setScaledContents(true);
+
+    messageNext->setText("The 'next video' button is not currently working! The purpose of this button is to skip to the next video.");
+    messageNext->hide();
+
+    messagePrev->setText("The 'previous video' button is not currently working! The purpose of this button is to go to the previous video in the list");
+    messagePrev->hide();
+
+    messageSearch->setText("The 'search' button is not currently working! The purpose of this button is to search for videos that matched the specific filter chosen.");
+    messageSearch->hide();
+
     //filter box elements
     elementsFilterBy<<"Filter by"<<"Country"<<"City"<<"Date";
     filterBox->setCurrentIndex(1);
@@ -39,18 +78,14 @@ void Application::createWidgets(){
     videoWidget->hide();
 
     descriptions<<"Description";
+}
 
-//    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
-
+void Application::createThumbnails(){
     // a list of the buttons
     vector<TheButton*> buttons;
     // the buttons are arranged in a grid layout
     buttonWidget->setLayout(layout);
-
-    int n=0;
-    int j=0;
-    int doubleDigits=1;
-    int increase=0;
+    int n=0, j=0, doubleDigits=1, increase=0;
     //create x buttons (for x no of videos)
     for ( unsigned i = 0; i < videos.size(); i++ ) {
         //this conditions will create the rows and columns of the grid layout
@@ -92,79 +127,23 @@ void Application::createWidgets(){
         button->init(&videos.at(i));
 
     }
-
     // tell the player what buttons and videos are available
     player->setContent(&buttons, & videos);
+}
 
-    label->setAlignment(Qt::AlignLeft);
-    label->hide();
-
-    fullScreenButton->hide();
-    fullScreenButton->setBackgroundRole(QPalette::Light);
+//this function creates the connections between the buttons and their functionality
+void Application::createConnections(){
     connect(fullScreenButton, SIGNAL(clicked()), this, SLOT(fullScreen()));
-
-    //buttons will hide as default such that they are only present when the video is played
-    // play/pause button
-    playPauseButton->hide();
-    playAndPause();
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
-
-    //video timeline
-    //shows the progress of the video and also we can choose what minute to play
-    slider = new QSlider(Qt::Horizontal, this);
-    slider->hide();
     connect(player, &QMediaPlayer::durationChanged, slider, &QSlider::setMaximum);
     connect(player, &QMediaPlayer::positionChanged, slider, &QSlider::setValue);
     connect(slider, &QSlider::sliderMoved, player, &QMediaPlayer::setPosition);
-
-    //forward 10 seconds button
-    forward->hide();
-    forward->setIcon(QIcon(":/fast-forward.svg"));
     connect(forward, SIGNAL(clicked()), this, SLOT(seekForward()));
-
-    //go backwards 10 seconds button
-    backward->hide();
-    backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
-
-    //previous video - still working out
-    previous->hide();
-    previous->setIcon(QIcon(":/back.svg"));
     connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
-
-    //next video - still working out
-    next->hide();
-    next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
-
-    //search button
-    search->setIcon(QIcon(":/magnifying-glass.svg"));
-    search->setFixedHeight(40);
     connect(search, SIGNAL(clicked()), this, SLOT(searchVideo()));
-    //set search field height
-    searchField->setFixedHeight(40);
-    //set filter box height
-    filterBox->setFixedHeight(40);
-
-    //volume slider
-    volumeSlider->hide();
-    volumeSlider->setRange(0, 100);
-    volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
-    volumeLabel->hide();
-    volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
-    volumeLabel->setScaledContents(true);
-
-
-    messageNext->setText("The 'next video' button is not currently working! The purpose of this button is to skip to the next video.");
-    messageNext->hide();
-
-    messagePrev->setText("The 'previous video' button is not currently working! The purpose of this button is to go to the previous video in the list");
-    messagePrev->hide();
-
-    messageSearch->setText("The 'search' button is not currently working! The purpose of this button is to search for videos that matched the specific filter chosen.");
-    messageSearch->hide();
-
 }
 
 
@@ -232,7 +211,6 @@ void Application::fullScreen() {
     //Enables fullscreen mode with media buttons
     videoWidget->show();
     buttonWidget->hide();
-    //videoWidget->setMinimumHeight(500);
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
@@ -261,22 +239,17 @@ void Application::fullScreen() {
     filterBox->hide();
     searchField->hide();
     search->hide();
-
   }
 }
-
-// play/pause button connection
-//we change the vlaue of the boolean variable isVideoPlaying
-//in order to keep track of the video's status (played/paused)
-//issue: if clicking on another video, the button has to be pressed a few times
-//before it starts working properly - fixed yayyy - had to call playAndPause in fullScreen function
-//also made autoplay to change icon without affecting playback status when button clicked
 
 void Application::autoPlay() {
     playPauseButton->setIcon(QIcon(":/pause.svg"));
     isVideoPlaying = false;
 }
 
+// play/pause button connection
+//we change the vlaue of the boolean variable isVideoPlaying
+//in order to keep track of the video's status (played/paused)
 void Application::playAndPause() {
   if (isVideoPlaying == false) {
     player->pause();
@@ -301,7 +274,8 @@ void Application::seekBackward(){
 }
 
 
-//----Prev/Next
+
+//following 3 functions will display error messages when their corresponding button is clicked
 void Application::vidNext(){
     messageNext->show();
 }
@@ -313,24 +287,3 @@ void Application::vidPrevious(){
 void Application::searchVideo(){
     messageSearch->show();
 }
-
-//this function makes the connection between the elements of the combo box and the videos
-//the videos are not properly distributed, hence the function does not work the proper way yet
-//at least it shows that we can group the videos and that the combo box works, when an element is clicked
-void Application::switchLocation(int index)//seems like something a little funky going on here
-{
-    label->setText(locList->itemText(index));
-    for ( unsigned i = 0; i < 2; i++ ) {
-        //creating the thumbnails for the videos
-        TheButton *button = new TheButton(buttonWidget);
-        button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
-        connect(button, SIGNAL(clicked()), this, SLOT(fullScreen()));
-        button->setMaximumHeight(500);
-        buttons.push_back(button);
-        layout->addWidget(button);
-        button->init(&videos.at(0));
-    }
-}
-
-
-
