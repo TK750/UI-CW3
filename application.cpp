@@ -20,7 +20,7 @@
 
 Application::Application(vector<TheButtonInfo> videos) : videos(videos){
     //windows' properties
-    setWindowTitle("tomeo");
+    setWindowTitle("Tomeo");
     setMinimumSize(800, 680);
 
     //functions used to create the application tomeo
@@ -38,7 +38,7 @@ void Application::createWidgets(){
     //this helps organinzing the videos making them more accessbile
     locations<<"Location1"<<"Location2";
 
-    //more descriotions will be added to the list after getting the locations' combo boc working
+    //more descriptions will be added to the list after getting the locations' combo box working
     descriptions<<"Description"<<"Description2";
 
     locationsList->addItems(locations);
