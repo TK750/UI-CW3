@@ -62,6 +62,10 @@ private:
     QStringList elementsFilterBy;
     QLineEdit* searchField = new QLineEdit();
     QPushButton* search = new QPushButton;
+    //pop up error messages for the missing functionality
+    QMessageBox* messageNext = new QMessageBox();
+    QMessageBox* messagePrev = new QMessageBox();
+    QMessageBox* messageSearch = new QMessageBox();
 
     //thumbnails layout
     QGridLayout* layout = new QGridLayout(this);
@@ -78,8 +82,10 @@ private slots:
     void switchLocation(int index);
     void vidNext();
     void vidPrevious();
+    void searchVideo();
 
 
 };
 
 #endif // APPLICATION_H
+
