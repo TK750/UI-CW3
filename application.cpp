@@ -53,13 +53,10 @@ void Application::createWidgets(){
     //create x buttons (for x no of videos)
     for ( unsigned i = 0; i < videos.size(); i++ ) {
         //this conditions will create the rows and columns of the grid layout
-        if(i==2){
+        if(i % 2 == 0){
             n++;
         }
-        if(i==4){
-            n++;
-        }
-        if(i==1 || i==3 || i==5){
+        if(i % 2 != 0){
             j = 0;
         }
         else{
@@ -69,7 +66,7 @@ void Application::createWidgets(){
 
         //creating a container layout inside the grid layout that contains the description and the video
         QLabel *description = new QLabel();
-        description->setText(descriptions[0] + ' ' + (i + '0' + 1));
+        description->setText(descriptions[0] + ' ' + ('0' + i + 1));
         QFrame *container = new QFrame;
         container->setLayout(new QVBoxLayout);
         //creating the thumbnails for the videos
