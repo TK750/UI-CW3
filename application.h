@@ -21,6 +21,7 @@
 #include "the_button.h"
 #include "the_player.h"
 
+using namespace std;
 
 class Application: public QWidget
 {
@@ -33,6 +34,9 @@ public:
 private:
     void createWidgets();
     void createLayout();
+    void createVideoButtons();
+    void createButtonsLayout();
+    void autoPlay();
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
@@ -42,16 +46,23 @@ private:
     QLabel* label = new QLabel("<h3>Description</h3>");
     QScrollArea* scrollArea = new QScrollArea;
     QComboBox* locList = new QComboBox();
-    QPushButton* fullScreenButton = new QPushButton("Full Screen");
-    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
+    QComboBox* locationsList = new QComboBox();
+    QPushButton* fullScreenButton = new QPushButton();
     QPushButton* playPauseButton = new QPushButton;
-    bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
-    QStringList descriptionList;
+    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
+    QLabel *volumeLabel = new QLabel;
+    bool isVideoPlaying; //used for the play/pause button to check the status of the video
+    bool isVideoFullScreen = false;
+    QStringList descriptions;
+    QStringList locations;
     QSlider *slider;
     QPushButton* forward = new QPushButton;
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
+
+    //thumbnails layout
+    QGridLayout* layout = new QGridLayout();
 
 
 //definitions of the functions used for the player's buttons
@@ -61,8 +72,10 @@ private slots:
     void playAndPause();
     void seekForward();
     void seekBackward();
-    // void vidNext();
-    // void vidPrevious();
+    void switchLocation(int index);
+    void vidNext();
+    void vidPrevious();
+
 
 };
 
