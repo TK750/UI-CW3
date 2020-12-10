@@ -35,33 +35,36 @@ private:
     void createWidgets();
     void createLayout();
     void autoPlay();
+    void createConnections();
+    void createThumbnails();
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
-    QWidget *buttonWidget = new QWidget();
-    vector<TheButton*> buttons;
     ThePlayer *player = new ThePlayer();
     QLabel* label = new QLabel("<h3>Description</h3>");
-    QScrollArea* scrollArea = new QScrollArea;
-    QComboBox* locList = new QComboBox();
-    QComboBox* locationsList = new QComboBox();
+    QLabel *volumeLabel = new QLabel;
+    QStringList descriptions;
+    QComboBox* filterBox = new QComboBox();
+    QStringList elementsFilterBy;
+    QLineEdit* searchField = new QLineEdit();
+
+    //buttons and sliders
+    QWidget *buttonWidget = new QWidget();
+    vector<TheButton*> buttons;
     QPushButton* fullScreenButton = new QPushButton();
     QPushButton* playPauseButton = new QPushButton;
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
-    QLabel *volumeLabel = new QLabel;
-    bool isVideoPlaying; //used for the play/pause button to check the status of the video
-    bool isVideoFullScreen = false;
-    QStringList descriptions;
-    QStringList locations;
     QSlider *slider;
     QPushButton* forward = new QPushButton;
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
-    QComboBox* filterBox = new QComboBox();
-    QStringList elementsFilterBy;
-    QLineEdit* searchField = new QLineEdit();
     QPushButton* search = new QPushButton;
+
+    //boolean values
+    bool isVideoPlaying; //used for the play/pause button to check the status of the video
+    bool isVideoFullScreen = false;
+
     //pop up error messages for the missing functionality
     QMessageBox* messageNext = new QMessageBox();
     QMessageBox* messagePrev = new QMessageBox();
@@ -79,12 +82,9 @@ private slots:
     void playAndPause();
     void seekForward();
     void seekBackward();
-    void switchLocation(int index);
     void vidNext();
     void vidPrevious();
     void searchVideo();
-
-
 };
 
 #endif // APPLICATION_H
