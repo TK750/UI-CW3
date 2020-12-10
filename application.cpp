@@ -30,60 +30,67 @@ Application::Application(vector<TheButtonInfo> videos) : videos(videos){
 }
 
 void Application::createWidgets(){
+    //filter box elements
+    elementsFilterBy<<"Filter by"<<"Country"<<"City"<<"Date";
+    filterBox->setCurrentIndex(1);
+    filterBox->addItems(elementsFilterBy);
 
     player->setVideoOutput(videoWidget);
     videoWidget->hide();
 
-    //list of possible locations of where the videos where taken
-    //this helps organinzing the videos making them more accessbile
-    locations<<"Location1"<<"Location2";
+    descriptions<<"Description";
 
-    //more descriptions will be added to the list after getting the locations' combo box working
-    descriptions<<"Description"<<"Description2";
-
-    locationsList->addItems(locations);
-    locList->addItems(descriptions);
-    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
+//    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
 
     // a list of the buttons
     vector<TheButton*> buttons;
     // the buttons are arranged in a grid layout
     buttonWidget->setLayout(layout);
 
-
     int n=0;
     int j=0;
+    int doubleDigits=1;
+    int increase=0;
     //create x buttons (for x no of videos)
     for ( unsigned i = 0; i < videos.size(); i++ ) {
         //this conditions will create the rows and columns of the grid layout
-        if(i==2){
+        if(i % 2 == 0){
             n++;
         }
-        if(i==4){
-            n++;
-        }
-        if(i==1 || i==3 || i==5){
+        if(i % 2 != 0){
             j = 0;
         }
         else{
             j = 1;
         }
 
-        //the following lines are supposed to give each video a distinctive description
-        //it allocated descriptions correctly, however i could not add it to the layout without messing up the thumbnails' functionality
-
-//        QLabel *description = new QLabel();
-//        description->setText(descriptionList[0] + ' ' + (i + '0' + 1));
-
+        //creating a container layout inside the grid layout that contains the description and the video
+        QLabel *description = new QLabel();
+        if(i<9){
+            description->setText(descriptions[0] + ' ' + (i + '0' + 1));
+        }
+        else{
+            //doubleDigits is set to 1 and it remains constant representing the first number
+            //increase represents the second digit and it increases after each loop
+            description->setText(descriptions[0] + ' ' + (doubleDigits + '0') + ('0' + increase));
+            increase++;
+        }
+        QFrame *container = new QFrame;
+        container->setLayout(new QVBoxLayout);
         //creating the thumbnails for the videos
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         connect(button, SIGNAL(clicked()), this, SLOT(fullScreen()));
-        button->setMaximumHeight(500);
+        button->setMaximumHeight(600);
         buttons.push_back(button);
-        layout->addWidget(button,n,j);
+        description->setFixedHeight(30);
+        description->setStyleSheet("font-size: 20px;height: 40px;width: 120px;");
+        //adding the thumnails and the buttons to the container layout
+        container->layout()->addWidget(button);
+        container->layout()->addWidget(description);
+        layout->addWidget(container, n, j);
         button->init(&videos.at(i));
-//        layout->addWidget(description,2*n+4, j);
+
     }
 
     // tell the player what buttons and videos are available
@@ -119,7 +126,7 @@ void Application::createWidgets(){
     backward->hide();
     backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
-    
+
     //previous video - still working out
     previous->hide();
     previous->setIcon(QIcon(":/back.svg"));
@@ -130,14 +137,33 @@ void Application::createWidgets(){
     next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
+    //search button
+    search->setIcon(QIcon(":/magnifying-glass.svg"));
+    search->setFixedHeight(40);
+    connect(search, SIGNAL(clicked()), this, SLOT(searchVideo()));
+    //set search field height
+    searchField->setFixedHeight(40);
+    //set filter box height
+    filterBox->setFixedHeight(40);
+
     //volume slider
     volumeSlider->hide();
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
-    volumeLabel->setMaximumWidth(0);
+    volumeLabel->hide();
     volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
     volumeLabel->setScaledContents(true);
+
+
+    messageNext->setText("The 'next video' button is not currently working! The purpose of this button is to skip to the next video.");
+    messageNext->hide();
+
+    messagePrev->setText("The 'previous video' button is not currently working! The purpose of this button is to go to the previous video in the list");
+    messagePrev->hide();
+
+    messageSearch->setText("The 'search' button is not currently working! The purpose of this button is to search for videos that matched the specific filter chosen.");
+    messageSearch->hide();
 
 }
 
@@ -155,8 +181,14 @@ void Application::createLayout(){
     buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
+    //layout for the search bar, search button and filter combo box
+    QHBoxLayout* searchLayout = new QHBoxLayout();
+    searchLayout->addWidget(filterBox);
+    searchLayout->addWidget(searchField);
+    searchLayout->addWidget(search);
+
     QVBoxLayout* descriptionLayout = new QVBoxLayout();
-    descriptionLayout->addWidget(locationsList);
+    descriptionLayout->addLayout(searchLayout);
     descriptionLayout->addWidget(buttonWidget);
 
     top->addWidget(videoWidget);
@@ -178,8 +210,10 @@ void Application::fullScreen() {
     //when the back button is pressed, the video widget is given the size of 0 such that it disappears off the screen
     videoWidget->hide();
     buttonWidget->show();
-    locationsList->show();
     isVideoFullScreen=false;
+    filterBox->show();
+    searchField->show();
+    search->show();
     //player's buttons will dissapear while we are in the video grid
     playAndPause();
     playPauseButton->hide();
@@ -202,7 +236,6 @@ void Application::fullScreen() {
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
-    locationsList->hide();
     autoPlay();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
@@ -225,6 +258,9 @@ void Application::fullScreen() {
     previous->show();
     next->setMaximumWidth(70);
     next->show();
+    filterBox->hide();
+    searchField->hide();
+    search->hide();
 
   }
 }
@@ -254,12 +290,12 @@ void Application::playAndPause() {
   }
 }
 
-//forward 10 seconds button connection
+//forward 5 seconds button connection
 void Application::seekForward(){
     player->setPosition(round((double)slider->value() * 5 ));
 }
 
-//backward 10 seconds button connection
+//backward 5 seconds button connection
 void Application::seekBackward(){
     player->setPosition(round((double)slider->value() / 5));
 }
@@ -267,18 +303,17 @@ void Application::seekBackward(){
 
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
-
-
 void Application::vidNext(){
-
-    //player->
+    messageNext->show();
 }
 
 void Application::vidPrevious(){
-
+    messagePrev->show();
 }
-
-
+//shows the error message for the search button
+void Application::searchVideo(){
+    messageSearch->show();
+}
 
 //this function makes the connection between the elements of the combo box and the videos
 //the videos are not properly distributed, hence the function does not work the proper way yet
@@ -297,5 +332,6 @@ void Application::switchLocation(int index)//seems like something a little funky
         button->init(&videos.at(0));
     }
 }
+
 
 
