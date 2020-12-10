@@ -38,15 +38,8 @@ void Application::createWidgets(){
     player->setVideoOutput(videoWidget);
     videoWidget->hide();
 
-//    //list of possible locations of where the videos where taken
-//    //this helps organinzing the videos making them more accessbile
-//    locations<<"Location1"<<"Location2";
+    descriptions<<"Description";
 
-//    //more descriptions will be added to the list after getting the locations' combo box working
-//    descriptions<<"Description"<<"Description2";
-
-//    locationsList->addItems(locations);
-//    locList->addItems(descriptions);
 //    connect(locationsList, SIGNAL(activated(int)), this, SLOT(switchLocation(int)));
 
     // a list of the buttons
@@ -73,21 +66,26 @@ void Application::createWidgets(){
             j = 1;
         }
 
-        //the following lines are supposed to give each video a distinctive description
-        //it allocated descriptions correctly, however i could not add it to the layout without messing up the thumbnails' functionality
 
-//        QLabel *description = new QLabel();
-//        description->setText(descriptionList[0] + ' ' + (i + '0' + 1));
-
+        //creating a container layout inside the grid layout that contains the description and the video
+        QLabel *description = new QLabel();
+        description->setText(descriptions[0] + ' ' + (i + '0' + 1));
+        QFrame *container = new QFrame;
+        container->setLayout(new QVBoxLayout);
         //creating the thumbnails for the videos
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         connect(button, SIGNAL(clicked()), this, SLOT(fullScreen()));
-        button->setMaximumHeight(500);
+        button->setMaximumHeight(600);
         buttons.push_back(button);
-        layout->addWidget(button,n,j);
+        description->setFixedHeight(30);
+        description->setStyleSheet("font-size: 20px;height: 40px;width: 120px;");
+        //adding the thumnails and the buttons to the container layout
+        container->layout()->addWidget(button);
+        container->layout()->addWidget(description);
+        layout->addWidget(container, n, j);
         button->init(&videos.at(i));
-//        layout->addWidget(description,2*n+4, j);
+
     }
 
     // tell the player what buttons and videos are available
@@ -137,6 +135,7 @@ void Application::createWidgets(){
     //search button
     search->setIcon(QIcon(":/magnifying-glass.svg"));
     search->setFixedHeight(40);
+    connect(search, SIGNAL(clicked()), this, SLOT(searchVideo()));
     //set search field height
     searchField->setFixedHeight(40);
     //set filter box height
@@ -150,6 +149,17 @@ void Application::createWidgets(){
     volumeLabel->setMaximumWidth(0);
     volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
     volumeLabel->setScaledContents(true);
+
+
+    messageNext->setText("The 'next video' button is not currently working! The purpose of this button is to skip to the next video.");
+    messageNext->hide();
+
+    messagePrev->setText("The 'previous video' button is not currently working! The purpose of this button is to go to the previous video in the list");
+    messagePrev->hide();
+
+    messageSearch->setText("The 'search' button is not currently working! The purpose of this button is to search for videos that matched the specific filter chosen.");
+    messageSearch->hide();
+
 }
 
 
@@ -288,15 +298,16 @@ void Application::seekBackward(){
 
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
-
-
 void Application::vidNext(){
-
-    //player->
+    messageNext->show();
 }
 
 void Application::vidPrevious(){
-
+    messagePrev->show();
+}
+//shows the error message for the search button
+void Application::searchVideo(){
+    messageSearch->show();
 }
 
 //this function makes the connection between the elements of the combo box and the videos
@@ -316,3 +327,4 @@ void Application::switchLocation(int index)//seems like something a little funky
         button->init(&videos.at(0));
     }
 }
+
