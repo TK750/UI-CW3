@@ -21,8 +21,7 @@
 Application::Application(vector<TheButtonInfo> videos) : videos(videos){
     //windows' properties
     setWindowTitle("tomeo");
-    setMinimumSize(800, 680);
-    setMinimumWidth(1000);
+    setMinimumSize(800, 720);
 
     //functions used to create the application tomeo
     createWidgets();
@@ -50,6 +49,7 @@ void Application::createWidgets(){
     vector<TheButton*> buttons;
     // the buttons are arranged in a grid layout
     buttonWidget->setLayout(layout);
+
 
     int n=0;
     int j=0;
@@ -79,7 +79,7 @@ void Application::createWidgets(){
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         connect(button, SIGNAL(clicked()), this, SLOT(fullScreen()));
-        button->setMinimumHeight(0);
+        button->setMaximumHeight(500);
         buttons.push_back(button);
         layout->addWidget(button,n,j);
         button->init(&videos.at(i));
@@ -90,48 +90,48 @@ void Application::createWidgets(){
     player->setContent(&buttons, & videos);
 
     label->setAlignment(Qt::AlignLeft);
-    label->setMaximumWidth(0);
+    label->hide();
 
-    fullScreenButton->setMaximumWidth(0);
+    fullScreenButton->hide();
     fullScreenButton->setBackgroundRole(QPalette::Light);
     connect(fullScreenButton, SIGNAL(clicked()), this, SLOT(fullScreen()));
 
     //buttons will have 0 as default size such that they are only present when the video is played
     // play/pause button
-    playPauseButton->setMaximumWidth(0);
+    playPauseButton->hide();
     playPauseButton->setIcon(QIcon(":/pause.svg"));
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
 
     //video timeline
     //shows the progress of the video and also we can choose what minute to play
     slider = new QSlider(Qt::Horizontal, this);
-    slider->setMaximumWidth(0);
+    slider->hide();
     connect(player, &QMediaPlayer::durationChanged, slider, &QSlider::setMaximum);
     connect(player, &QMediaPlayer::positionChanged, slider, &QSlider::setValue);
     connect(slider, &QSlider::sliderMoved, player, &QMediaPlayer::setPosition);
 
     //forward 10 seconds button
-    forward->setMaximumWidth(0);
+    forward->hide();
     forward->setIcon(QIcon(":/fast-forward.svg"));
     connect(forward, SIGNAL(clicked()), this, SLOT(seekForward()));
 
     //go backwards 10 seconds button
-    backward->setMaximumWidth(0);
+    backward->hide();
     backward->setIcon(QIcon(":/rewind.svg"));
     connect(backward, SIGNAL(clicked()), this, SLOT(seekBackward()));
     
     //previous video - still working out
-    previous->setMaximumWidth(0);
+    previous->hide();
     previous->setIcon(QIcon(":/back.svg"));
     connect(previous, SIGNAL(clicked()), this, SLOT(vidPrevious()));
 
     //next video - still working out
-    next->setMaximumWidth(0);
+    next->hide();
     next->setIcon(QIcon(":/next.svg"));
     connect(next, SIGNAL(clicked()), this, SLOT(vidNext()));
 
     //volume slider
-    volumeSlider->setMaximumWidth(0);
+    volumeSlider->hide();
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
@@ -140,9 +140,6 @@ void Application::createWidgets(){
 
 
 void Application::createLayout(){
-
-    QVBoxLayout *top = new QVBoxLayout();
-
     //layout for the player's buttons
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addWidget(fullScreenButton);
@@ -155,19 +152,20 @@ void Application::createLayout(){
     buttonsLayout->addStretch(); //positions the widgets on the left
 
     QVBoxLayout* descriptionLayout = new QVBoxLayout();
-    //"Location/Description" of the video playing
     descriptionLayout->addWidget(locationsList);
     descriptionLayout->addWidget(buttonWidget);
-    descriptionLayout->addWidget(label);
-    descriptionLayout->addWidget(slider);
 
     top->addWidget(videoWidget);
+    //"Location/Description" of the video playing
+    top->addWidget(label);
+    top->addWidget(slider);
     top->addLayout(descriptionLayout);
     top->addLayout(buttonsLayout);
 
     setLayout(top);
 
 }
+
 
 //full screen mode function
 void Application::fullScreen() {
@@ -194,7 +192,7 @@ void Application::fullScreen() {
   else {
     videoWidget->show();
     buttonWidget->hide();
-    videoWidget->setMaximumWidth(2000);
+    //videoWidget->setMinimumHeight(500);
     videoWidget->setMaximumHeight(2000);
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
@@ -205,11 +203,11 @@ void Application::fullScreen() {
     forward->show();
     backward->setMaximumWidth(70);
     backward->show();
-    slider->setMinimumWidth(800);
     slider->show();
     fullScreenButton->setMaximumWidth(120);
     fullScreenButton->show();
     label->setMaximumWidth(200);
+    label->setMaximumHeight(40);
     label->show();
     volumeSlider->setMinimumWidth(300);
     volumeSlider->show();
@@ -276,7 +274,7 @@ void Application::switchLocation(int index)
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo* ))); // when clicked, tell the player to play.
         connect(button, SIGNAL(clicked()), this, SLOT(fullScreen()));
-        button->setMinimumHeight(0);
+        button->setMaximumHeight(500);
         buttons.push_back(button);
         layout->addWidget(button);
         button->init(&videos.at(0));
