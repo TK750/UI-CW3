@@ -47,9 +47,10 @@ void Application::createWidgets(){
     // the buttons are arranged in a grid layout
     buttonWidget->setLayout(layout);
 
-
     int n=0;
     int j=0;
+    int doubleDigits=1;
+    int increase=0;
     //create x buttons (for x no of videos)
     for ( unsigned i = 0; i < videos.size(); i++ ) {
         //this conditions will create the rows and columns of the grid layout
@@ -63,10 +64,17 @@ void Application::createWidgets(){
             j = 1;
         }
 
-
         //creating a container layout inside the grid layout that contains the description and the video
         QLabel *description = new QLabel();
-        description->setText(descriptions[0] + ' ' + ('0' + i + 1));
+        if(i<9){
+            description->setText(descriptions[0] + ' ' + (i + '0' + 1));
+        }
+        else{
+            //doubleDigits is set to 1 and it remains constant representing the first number
+            //increase represents the second digit and it increases after each loop
+            description->setText(descriptions[0] + ' ' + (doubleDigits + '0') + ('0' + increase));
+            increase++;
+        }
         QFrame *container = new QFrame;
         container->setLayout(new QVBoxLayout);
         //creating the thumbnails for the videos
@@ -143,7 +151,7 @@ void Application::createWidgets(){
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
-    volumeLabel->setMaximumWidth(0);
+    volumeLabel->hide();
     volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
     volumeLabel->setScaledContents(true);
 
@@ -324,4 +332,6 @@ void Application::switchLocation(int index)//seems like something a little funky
         button->init(&videos.at(0));
     }
 }
+
+
 
