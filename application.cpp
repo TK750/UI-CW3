@@ -20,7 +20,7 @@
 
 Application::Application(vector<TheButtonInfo> videos) : videos(videos){
     //windows' properties
-    setWindowTitle("tomeo");
+    setWindowTitle("Tomeo");
     setMinimumSize(800, 720);
 
     //functions used to create the application tomeo
@@ -38,7 +38,7 @@ void Application::createWidgets(){
     //this helps organinzing the videos making them more accessbile
     locations<<"Location1"<<"Location2";
 
-    //more descriotions will be added to the list after getting the locations' combo boc working
+    //more descriptions will be added to the list after getting the locations' combo box working
     descriptions<<"Description"<<"Description2";
 
     locationsList->addItems(locations);
@@ -96,10 +96,10 @@ void Application::createWidgets(){
     fullScreenButton->setBackgroundRole(QPalette::Light);
     connect(fullScreenButton, SIGNAL(clicked()), this, SLOT(fullScreen()));
 
-    //buttons will have 0 as default size such that they are only present when the video is played
+    //buttons will hide as default such that they are only present when the video is played
     // play/pause button
     playPauseButton->hide();
-    playPauseButton->setIcon(QIcon(":/pause.svg"));
+    playAndPause();
     connect(playPauseButton, SIGNAL(clicked()), this, SLOT(playAndPause()));
 
     //video timeline
@@ -135,6 +135,9 @@ void Application::createWidgets(){
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
+    volumeLabel->setMaximumWidth(0);
+    volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
+    volumeLabel->setScaledContents(true);
 
 }
 
@@ -148,6 +151,7 @@ void Application::createLayout(){
     buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(forward);
     buttonsLayout->addWidget(next);
+    buttonsLayout->addWidget(volumeLabel);
     buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
@@ -177,19 +181,21 @@ void Application::fullScreen() {
     locationsList->show();
     isVideoFullScreen=false;
     //player's buttons will dissapear while we are in the video grid
+    playAndPause();
     playPauseButton->hide();
     forward->hide();
     backward->hide();
     slider->hide();
     fullScreenButton->hide();
     label->hide();
+    volumeLabel->hide();
     volumeSlider->hide();
     previous->hide();
     next->hide();
     player->pause();
   }
-  //or if the widget is already in full screen mode, it makes it go back to normal
   else {
+    //Enables fullscreen mode with media buttons
     videoWidget->show();
     buttonWidget->hide();
     //videoWidget->setMinimumHeight(500);
@@ -197,19 +203,23 @@ void Application::fullScreen() {
     isVideoFullScreen=true;
     fullScreenButton->setIcon(QIcon(":/list.svg"));
     locationsList->hide();
+    autoPlay();
     playPauseButton->setMaximumWidth(200);
     playPauseButton->show();
     forward->setMaximumWidth(70);
     forward->show();
     backward->setMaximumWidth(70);
     backward->show();
+    slider->setMaximumWidth(2000);
     slider->show();
     fullScreenButton->setMaximumWidth(120);
     fullScreenButton->show();
     label->setMaximumWidth(200);
     label->setMaximumHeight(40);
     label->show();
-    volumeSlider->setMinimumWidth(300);
+    volumeLabel->setMaximumSize(20,20);
+    volumeLabel->show();
+    volumeSlider->setMinimumWidth(250);
     volumeSlider->show();
     previous->setMaximumWidth(70);
     previous->show();
@@ -223,7 +233,14 @@ void Application::fullScreen() {
 //we change the vlaue of the boolean variable isVideoPlaying
 //in order to keep track of the video's status (played/paused)
 //issue: if clicking on another video, the button has to be pressed a few times
-//before it starts working properly
+//before it starts working properly - fixed yayyy - had to call playAndPause in fullScreen function
+//also made autoplay to change icon without affecting playback status when button clicked
+
+void Application::autoPlay() {
+    playPauseButton->setIcon(QIcon(":/pause.svg"));
+    isVideoPlaying = false;
+}
+
 void Application::playAndPause() {
   if (isVideoPlaying == false) {
     player->pause();
@@ -239,34 +256,34 @@ void Application::playAndPause() {
 
 //forward 10 seconds button connection
 void Application::seekForward(){
-    player->setPosition(round((double)slider->value() * 10 ));
+    player->setPosition(round((double)slider->value() * 5 ));
 }
 
 //backward 10 seconds button connection
 void Application::seekBackward(){
-    player->setPosition(round((double)slider->value() / 10));
+    player->setPosition(round((double)slider->value() / 5));
 }
 
 
 //----Prev/Next - stuck on this ----
 // Tried QMediaPlaylist
 
-/*
+
 void Application::vidNext(){
 
-    player->
+    //player->
 }
 
 void Application::vidPrevious(){
-    player->setContent(b, i))
+
 }
-*/
+
 
 
 //this function makes the connection between the elements of the combo box and the videos
-//the videos are not properly distributed, hence the funciton does not work the proper way yet
+//the videos are not properly distributed, hence the function does not work the proper way yet
 //at least it shows that we can group the videos and that the combo box works, when an element is clicked
-void Application::switchLocation(int index)
+void Application::switchLocation(int index)//seems like something a little funky going on here
 {
     label->setText(locList->itemText(index));
     for ( unsigned i = 0; i < 2; i++ ) {

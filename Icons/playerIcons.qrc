@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>bar-graph.svg</file>
         <file>rewind.svg</file>
         <file>fast-forward.svg</file>
         <file>back.svg</file>
@@ -8,5 +7,6 @@
         <file>list.svg</file>
         <file>play-button.svg</file>
         <file>pause.svg</file>
+        <file>speaker.svg</file>
     </qresource>
 </RCC>

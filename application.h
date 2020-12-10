@@ -34,7 +34,7 @@ public:
 private:
     void createWidgets();
     void createLayout();
-
+    void autoPlay();
 
     vector<TheButtonInfo> videos;
     QVideoWidget *videoWidget = new QVideoWidget;
@@ -46,9 +46,10 @@ private:
     QComboBox* locList = new QComboBox();
     QComboBox* locationsList = new QComboBox();
     QPushButton* fullScreenButton = new QPushButton();
-    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
     QPushButton* playPauseButton = new QPushButton;
-    bool isVideoPlaying = false; //used for the play/pause button to check the status of the video
+    QSlider *volumeSlider = new QSlider(Qt::Horizontal);
+    QLabel *volumeLabel = new QLabel;
+    bool isVideoPlaying; //used for the play/pause button to check the status of the video
     bool isVideoFullScreen = false;
     QStringList descriptions;
     QStringList locations;
@@ -57,7 +58,6 @@ private:
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
-    // can't figure out - QMediaPlaylist *playlist = new QMediaPlaylist;
 
     //thumbnails layout
     QGridLayout* layout = new QGridLayout(this);
@@ -72,8 +72,8 @@ private slots:
     void seekForward();
     void seekBackward();
     void switchLocation(int index);
-    // void vidNext(); - need to figure this out
-    // void vidPrevious();
+    void vidNext();
+    void vidPrevious();
 
 
 };
