@@ -50,6 +50,7 @@ private:
     QPushButton* fullScreenButton = new QPushButton();
     QPushButton* playPauseButton = new QPushButton;
     QSlider *volumeSlider = new QSlider(Qt::Horizontal);
+    QLabel *volumeLabel = new QLabel;
     bool isVideoPlaying; //used for the play/pause button to check the status of the video
     bool isVideoFullScreen = false;
     QStringList descriptions;
@@ -59,7 +60,6 @@ private:
     QPushButton* backward = new QPushButton;
     QPushButton* previous = new QPushButton;
     QPushButton* next = new QPushButton;
-    // can't figure out - QMediaPlaylist *playlist = new QMediaPlaylist;
 
     //thumbnails layout
     QGridLayout* layout = new QGridLayout();

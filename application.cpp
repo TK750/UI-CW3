@@ -134,6 +134,9 @@ void Application::createWidgets(){
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(player->volume());
     connect(volumeSlider, &QSlider::valueChanged, player, &QMediaPlayer::setVolume);
+    volumeLabel->setMaximumWidth(0);
+    volumeLabel->setPixmap(QPixmap(":/speaker.svg"));
+    volumeLabel->setScaledContents(true);
 
 }
 
@@ -150,6 +153,7 @@ void Application::createLayout(){
     buttonsLayout->addWidget(playPauseButton);
     buttonsLayout->addWidget(forward);
     buttonsLayout->addWidget(next);
+    buttonsLayout->addWidget(volumeLabel);
     buttonsLayout->addWidget(volumeSlider);
     buttonsLayout->addStretch(); //positions the widgets on the left
 
@@ -185,6 +189,7 @@ void Application::fullScreen() {
     slider->hide();
     fullScreenButton->hide();
     label->hide();
+    volumeLabel->hide();
     volumeSlider->hide();
     previous->hide();
     next->hide();
@@ -212,7 +217,9 @@ void Application::fullScreen() {
     fullScreenButton->show();
     label->setMaximumWidth(200);
     label->show();
-    volumeSlider->setMinimumWidth(300);
+    volumeLabel->setMaximumSize(20,20);
+    volumeLabel->show();
+    volumeSlider->setMinimumWidth(250);
     volumeSlider->show();
     previous->setMaximumWidth(70);
     previous->show();
@@ -268,13 +275,13 @@ void Application::vidNext(){
 }
 
 void Application::vidPrevious(){
-    player->jumpTo(buttons)
+
 }
 
 
 
 //this function makes the connection between the elements of the combo box and the videos
-//the videos are not properly distributed, hence the funciton does not work the proper way yet
+//the videos are not properly distributed, hence the function does not work the proper way yet
 //at least it shows that we can group the videos and that the combo box works, when an element is clicked
 void Application::switchLocation(int index)//seems like something a little funky going on here
 {
