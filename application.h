@@ -88,4 +88,3 @@ private slots:
 };
 
 #endif // APPLICATION_H
-
