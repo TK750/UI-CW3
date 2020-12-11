@@ -10,10 +10,6 @@ Eliza Margaritescu (sc19em)
 Olivia Broekhuis (sc19ob)
 
 
-Notes - Google doc link: https://docs.google.com/document/d/1Pau3QaGU4ViSTOSLtz_nyI4BHPHQPyGwWVjnjgDdO1s/edit?usp=sharing
-
-Writeup - Google doc link: https://docs.google.com/document/d/18In4LlW1e3DV6DwkdDvTjPfQnxSWVOArQIfwUh3JjKk/edit
-
 ### Current Repo Status:
 - Master Branch: Completed 2nd iteration
 - Tom Branch: Working branch for 3rd
@@ -52,8 +48,3 @@ Writeup - Google doc link: https://docs.google.com/document/d/18In4LlW1e3DV6Dwkd
 
 #### Done in third iteration: 
 - Use icons for player buttons
-
-
-
-#### To Do
-- Different responsive layout for tablet/phone???
