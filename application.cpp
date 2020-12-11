@@ -244,6 +244,7 @@ void Application::fullScreen() {
 
 void Application::autoPlay() {
     playPauseButton->setIcon(QIcon(":/pause.svg"));
+    player->play();
     isVideoPlaying = false;
 }
 
