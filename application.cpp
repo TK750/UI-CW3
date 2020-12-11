@@ -274,6 +274,7 @@ void Application::seekBackward(){
 }
 
 
+
 //following 3 functions will display error messages when their corresponding button is clicked
 void Application::vidNext(){
     messageNext->show();
@@ -286,8 +287,3 @@ void Application::vidPrevious(){
 void Application::searchVideo(){
     messageSearch->show();
 }
-
-
-
-
-
